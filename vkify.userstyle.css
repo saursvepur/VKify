@@ -120,12 +120,6 @@ img.name-checkmark {
 
 .completeness-gauge-gold {
 	background-color: #f6ebbb;
-	border-top: none;
-}
-
-.completeness-gauge.completeness-gauge-gold span::after {
-	content: '%';
-	visibility: hidden;
 }
 
 .toTop.has_down {
@@ -141,7 +135,7 @@ img.name-checkmark {
 	border-top: none;
 	color: #2b587a;
 	background: #dae1e8;
-    border-radius: 4px;
+	border-radius: 4px;
 }
 
 a.vkify-footer-lang {
@@ -182,12 +176,13 @@ a.vkify-footer-lang:hover {
 }
 
 body.scrolled .toTop {
-  opacity: 0.3;
+	opacity: 0.3;
 }
 
-body.scrolled .toTop:hover, .toTop.has_down:hover {
-  opacity: 0.8;
-  cursor: pointer;
+body.scrolled .toTop:hover,
+.toTop.has_down:hover {
+	opacity: 0.8;
+	cursor: pointer;
 }
 
 #backdrop {
@@ -195,12 +190,53 @@ body.scrolled .toTop:hover, .toTop.has_down:hover {
 }
 
 .header_navigation #search_box .search_box_button {
-  border: solid 1px #395C83;
-  background-color: #45658B;
-  color: #ffffff;
-  padding: 1px 0px 1px 0px;
-  width: 80px;
-  cursor: pointer;
-  box-shadow: 0px 2px 0px 0px rgba(255, 255, 255, 0.18) inset;
+	border: solid 1px #395C83;
+	background-color: #45658B;
+	color: #ffffff;
+	padding: 1px 0px 1px 0px;
+	width: 80px;
+	cursor: pointer;
+	box-shadow: 0px 2px 0px 0px rgba(255, 255, 255, 0.18) inset;
 }
 
+.content_title_expanded {
+	background: #e1e7ed;
+	border-top: 1px solid #d3dae0;
+	border-bottom: 1px solid #d8dfe5;
+	padding: 3px 8px;
+	font-weight: bold;
+	outline: none;
+	color: #45688E;
+	background-image: none !important;
+}
+
+.content_title_expanded nobold {
+	color: #99ADC2;
+	font-weight: bold;
+	padding: 0px 2px;
+}
+
+.content_title_unexpanded nobold {
+	color: #bdbdbd;
+	font-weight: bold;
+	padding: 0px 2px;
+}
+
+.content_title_unexpanded {
+	background-image: none !important;
+	background-repeat: no-repeat;
+	background-color: #eee;
+	border-top: solid 1px #d3dae0;
+	padding-top: 3px;
+	padding-right: 8px;
+	padding-bottom: 3px;
+	padding-left: 8px;
+	border-bottom: 1px solid #d8dfe5;
+}
+
+.page_header {
+	/* 2007 */
+	background: url(/themepack/vk2007/0.0.1.0/resource/1.gif);
+	/* x.gif - новы гот, 1.gif - не новы гот, а можете ваще закомментить
+	это шоб синхронизовать с сервером */
+}

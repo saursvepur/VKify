@@ -174,6 +174,33 @@ border-top: 1px solid #517295;
     window.addEventListener('DOMContentLoaded', () => {
     /* замена футера */
 
+        const headerNavigation = document.querySelector('.header_navigation');
+        if (headerNavigation) {
+            const customHTML = `
+        <div class="link" style="margin-left: 28px;">
+        <div class="headerMusicBtn paused" id="headerMusicBtn"></div><a href="/">музыка</a></div>`;
+        const linkElements = headerNavigation.querySelectorAll('.link');
+        linkElements[1].insertAdjacentHTML('afterend', customHTML);
+        };
+        function toggleMusic() {
+            const headerMusicBtn = document.querySelector('.headerMusicBtn');
+
+            if (headerMusicBtn) {
+                headerMusicBtn.addEventListener('click', function() {
+                    if (headerMusicBtn.classList.contains('paused')) {
+                        window.player.play();
+                        headerMusicBtn.classList.remove('paused');
+                    } else {
+                        window.player.pause();
+                        headerMusicBtn.classList.add('paused');
+                    }
+                });
+            }
+        }
+
+        // Вызов функции для привязки обработчика событий
+        toggleMusic();
+
         const links = document.querySelectorAll('a.link');
         let linkRU, linkEN, linkUA;
 

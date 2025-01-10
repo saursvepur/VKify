@@ -18,7 +18,7 @@
     }
     if (Number(localStorage.getItem('ux.disable_ajax_routing')) == 0) {
         localStorage.setItem('ux.disable_ajax_routing', 1);
-        window.refresh();
+        location.reload();
     }
     const enable_setts = localStorage.getItem('enable_vkify_settings');
     const enable_vk2012 = localStorage.getItem('vk2012');

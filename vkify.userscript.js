@@ -1,5 +1,5 @@
 // ==UserScript==
-// @name         VKify add-on
+// @name         VKify
 // @namespace    http://tampermonkey.net/
 // @version      1.0
 // @description  Дополнительные штуки-друюки для VKify
@@ -16,10 +16,10 @@
     if (Number(localStorage.getItem('ux.auto_scroll')) == 1) {
         localStorage.setItem('ux.auto_scroll', 0)
     }
-    if (Number(localStorage.getItem('ux.disable_ajax_routing')) == 0) {
+   /*if (Number(localStorage.getItem('ux.disable_ajax_routing')) == 0) {
         localStorage.setItem('ux.disable_ajax_routing', 1);
         location.reload();
-    }
+    } я надеюсь, что выключать ajax больше не понадобится */
     const enable_setts = localStorage.getItem('enable_vkify_settings');
     const enable_vk2012 = localStorage.getItem('vk2012');
     const vk2012_header_type = localStorage.getItem('vk2012_header_type');
@@ -39,7 +39,7 @@
     }
 
     if (enable_setts == 'true') {
-        var vkifysett = '<a href="/settings?vkify" class="link">настройки VKify</a>';
+        var vkifysett = '<a href="/settings?vkify" target="_blank" class="link">настройки VKify</a>';
     } else {
        var vkifysett = '';
     }
@@ -54,7 +54,7 @@
     vk2012header1.type = 'text/css';
     vk2012header1.innerHTML = `
     .page_header {
-    background: url("data:image/png;base64,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") !important;
+    background: url("data:image/png;base64,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") !important;
     }`
     const vk2012style = document.createElement('style');
     vk2012style.type = 'text/css';
@@ -144,7 +144,7 @@ border-top: 1px solid #517295;
 
 .navigation .link:hover {
     background-color: #e2e8ee;
-    border-top: none;
+    border-top: 1px solid #fff !important;
 }
 
 
@@ -159,7 +159,67 @@ border-top: 1px solid #517295;
     background-color: #E4E4E4;
     border-top: 1px solid #CCCCCC;
 }
-    `;
+
+.page_yellowheader {
+  padding: 6px 10px 8px !important;
+  font-weight: bold !important;
+  background: url(/themepack/vk2012/0.0.1.0/resource/18.png) repeat-x !important;
+    background-color: rgba(0, 0, 0, 0) !important;
+  background-color: #e9edf1 !important;
+  border-right: solid 1px #e9edf1 !important;
+  border-left: solid 1px #e9edf1 !important;
+  border-bottom: solid 1px #e9edf1 !important;
+  color: #2b587a !important;
+  overflow: hidden !important;
+}
+.page_yellowheader span {
+  color: #AAB7C5 !important;
+}
+.completeness-gauge-gold {
+  background-color: #F7F7F7 !important;
+}
+.completeness-gauge-gold {
+  border-top: 1px solid #C6CBD1 !important;
+}
+.completeness-gauge.completeness-gauge-gold span {
+  color: #8F9BA9 !important;
+}
+.completeness-gauge-gold>div {
+  background-color: #C6CBD1 !important;
+}
+input[type="text"], input[type="password"], input[type~="text"], input[type~="password"], input[type="email"], input[type="phone"], input[type~="email"], input[type~="phone"], input[type="search"], select {
+    border: 1px solid #C3CBD4;
+    padding: 3px;
+    font-size: 11px;
+    font-family: tahoma, verdana, arial, sans-serif;
+    height: 26px;
+}
+input[type~="search"] {
+    border: 1px solid #4e729a !important;
+    padding: 3px !important;
+    font-size: 11px !important;
+    font-family: tahoma, verdana, arial, sans-serif !important;
+    border-radius: 3px !important;
+    background: url(/themepack/vk2012/0.0.1.0/resource/4.gif) no-repeat 3px 4px !important;
+    background-color: #fff !important;
+    padding-left: 23px !important;
+    background-position-y: 5px !important;
+    background-position-x: 5px !important;
+}
+input[type~="search"][name~="query"] {
+    width: 169px /* qualified */ !important;
+    background: url(/themepack/vk2012/0.0.1.0/resource/4.gif) no-repeat 3px 4px /* qualified */ !important;
+    background-color: #fff /* qualified */ !important;
+    padding-left: 22px /* qualified */ !important;
+    background-position-y: 5px /* qualified */ !important;
+    background-position-x: 6px /* qualified */ !important;
+    padding-bottom: 5px /* qualified */ !important;
+}
+.header_navigation #search_box select[name="section"], .header_navigation #search_box .search_box_button {
+  border: 1px solid #4e729a !important;
+  border-left: 0px !important;
+}
+`;
     var copydate = '2006-2007';
     if (enable_vk2012 == 'true') {
     document.head.appendChild(vk2012style);
@@ -172,16 +232,127 @@ border-top: 1px solid #517295;
         }
     }
     window.addEventListener('DOMContentLoaded', () => {
-    /* замена футера */
+    const ovkuserid = window.openvk.current_id;
+    const csrfToken = document.querySelector('meta[name="csrf"]').getAttribute('value');
+        const page_header = document.querySelector('.page_header');
+        if (page_header) {
+            const headerData = `<div class="page_header">                <a href="/" class="home_button" title="ВКонтакте"></a>
+                <div class="header_navigation">
+<div class="link header_divider_stick" id="search_box">
+                                <div id="search_box_fr">
+                                    <form id="search_form" action="/search" method="get">
+                                        <div id="search_and_one_more_wrapper">
+                                            <input autocomplete="off" type="search" maxlength="79" name="q" placeholder="Поиск" title="Поиск [Alt+Shift+F]" accesskey="f">
+                                            <select name="section">
+                                                <option value="users">по пользователям</option>
+                                                <option value="groups">по группам</option>
+                                                <option value="posts">по записям</option>
+                                                <option value="videos">по видео</option>
+                                                <option value="apps">по приложениям</option>
+                                                <option value="audios">по аудиозаписям</option>
+                                                <option value="audios_playlists">по плейлистам</option>
+                                            </select>
+                                        </div>
+                                        <button class="search_box_button">
+                                            <span>Поиск</span>
+                                        </button>
+                                    </form>
+                                </div>
+                                <div id="searchBoxFastTips"></div>
+                            </div>
+                            <div class="link">
+                                <a href="/search?q=&section=users">люди</a>
+                            </div><div class="link">
+                                <a href="/search?section=groups">сообщества</a>
+                            </div>
+                            <div class="link">
+                                <a href="/apps?act=list">игры </a>
+                            </div>
+        <div class="link" id="headerMusicLinkDiv" style="margin-right: 28px;">
+        <div class="headerMusicBtn paused" id="headerMusicBtn"></div><a id="headerMusicLink" href="/audios${ovkuserid}" aria-expanded="false">музыка</a></div>
+                            <div class="link">
+                                <a href="/support">помощь </a>
+                            </div>
+                            <div class="link">
+                                <a href="/logout?hash=${encodeURIComponent(csrfToken)}">выйти</a>
+                            </div>
+                </div></div>`;
+        page_header.innerHTML = headerData;
+            /* я украл эту хрень из исходников, хз как оно работает лол */
+            u(`#search_box form input[type="search"]`).on('focus', (e) => {
+                u('.page_header').addClass('search_expanded')
+            })
 
-        const headerNavigation = document.querySelector('.header_navigation');
-        if (headerNavigation) {
-            const customHTML = `
-        <div class="link" style="margin-left: 28px;">
-        <div class="headerMusicBtn paused" id="headerMusicBtn"></div><a href="/">музыка</a></div>`;
-        const linkElements = headerNavigation.querySelectorAll('.link');
-        linkElements[1].insertAdjacentHTML('afterend', customHTML);
+            u(`#search_box form input[type="search"]` || `#search_and_one_more_wrapper select`).on('blur', (e) => { {
+                setTimeout(() => {
+                    const focusedElement = document.activeElement;
+
+                    // Если новый элемент с фокусом не является select или input[type="search"]
+                    if (!u(focusedElement).is('#search_box form input[type="search"], #search_and_one_more_wrapper select')) {
+                        u('.page_header').removeClass('search_expanded');
+                    }
+    }, 0);
+                } /* ладно я понял как оно работает и поэтому я в целом убрал время ОЖИДания */
+            })
         };
+    /* опенвк не существует, очень сырая функция, не советую */
+    if (realvkify == 'true') {
+    function replovk(node) {
+        if (node.nodeType === Node.TEXT_NODE) {
+            node.nodeValue = node.nodeValue.replace(/OpenVK/gi, 'ВКонтакте');
+            node.nodeValue = node.nodeValue.replace(/опенвк/gi, 'ВКонтакте');
+            node.nodeValue = node.nodeValue.replace(/опен вк/gi, 'ВКонтакте');
+            node.nodeValue = node.nodeValue.replace(/open vk/gi, 'ВКонтакте');
+        } else {
+            node.childNodes.forEach(replovk);
+        }
+    }
+            replovk(document.body);
+    } /* работает только без AJAX вроде наверное, лучше её выпилить и никогда не вспоминать */
+  //* замена футера *//
+    const vkfooter = `
+            <div class="navigation_footer">
+                <a href="/about" class="link">о сайте</a>
+                <a href="/support?act=new" class="link">техподдержка</a>
+                <a href="/blog" class="link">блог</a>
+                <a href="/terms" target="_blank" class="link">правила</a>
+                `+vkifysett+`
+            </div>
+            <p>
+                    <a href="/" class="vkify-footer-lang">ВКонтакте</a> © `+copydate+`
+                    <a href="/language?lg=ru&hash=${encodeURIComponent(csrfToken)}&jReturnTo=${encodeURI(window.location.pathname)}" rel="nofollow" title="Русский" class="vkify-footer-lang">
+                        Русский
+                    </a>
+                    <a href="/language?lg=en&hash=${encodeURIComponent(csrfToken)}&jReturnTo=${encodeURI(window.location.pathname)}" rel="nofollow" title="English" class="vkify-footer-lang">
+						English
+                    </a>
+                    <a href="/language?lg=uk&hash=${encodeURIComponent(csrfToken)}&jReturnTo=${encodeURI(window.location.pathname)}" rel="nofollow" title="Українcька" class="vkify-footer-lang">
+                        Українcька
+                    </a>
+                    <a href="/language" class="vkify-footer-lang">all languages »</a>
+            </p>
+            <br>`;
+            const footer = document.querySelectorAll('.page_footer');
+            footer[0].innerHTML = vkfooter;
+
+        let mo = new MutationObserver(function(mutations) {
+        const footer = document.querySelectorAll('.page_footer');
+            if (footer[0].textContent.includes('OpenVK Altair Preview')) {
+                    footer[0].innerHTML = vkfooter;
+            }
+        });
+
+        if (footer) {
+            mo.observe(footer[0], {
+                childList: true,
+                attributes: true,
+                characterData: true,
+                subtree: true,
+                attributeOldValue: true,
+                characterDataOldValue: true
+            });
+        }
+        if (enable_vk2012 == 'true') {
         function toggleMusic() {
             const headerMusicBtn = document.querySelector('.headerMusicBtn');
 
@@ -198,51 +369,22 @@ border-top: 1px solid #517295;
             }
         }
 
-        // Вызов функции для привязки обработчика событий
-        toggleMusic();
-
-        const links = document.querySelectorAll('a.link');
-        let linkRU, linkEN, linkUA;
-
-        links.forEach(link => {
-            const href = link.getAttribute('href');
-            if (!href) return;
-            if (href.includes('lg=ru')) {
-                linkRU = href;
-            } else if (href.includes('lg=en')) {
-                linkEN = href;
-            } else if (href.includes('lg=uk')) {
-                linkUA = href;
+            if (window.player && window.player.audioPlayer) {
+                const headerMusicBtn = document.querySelector('.headerMusicBtn');
+                setInterval(() => {
+                    if (window.player.is_closed == true) {
+                        headerMusicBtn.classList.add('closed');
+                    }
+                    if (window.player.audioPlayer.paused == true) {
+                        headerMusicBtn.classList.add('paused');
+                    }
+                    else {
+                        headerMusicBtn.classList.remove('paused');
+                    }
+                }, 50);
             }
-        });
-
-    const vkfooter = `
-            <div class="navigation_footer">
-                <a href="/about" class="link">о сайте</a>
-                <a href="/support?act=new" class="link">техподдержка</a>
-                <a href="/blog" class="link">блог</a>
-                <a href="/terms" target="_blank" class="link">правила</a>
-                `+vkifysett+`
-            </div>
-            <p>
-                    <a href="https://ovk.to" class="vkify-footer-lang">ВКонтакте</a> © `+copydate+`
-                    <a href="`+linkRU+`" rel="nofollow" title="Русский" class="vkify-footer-lang">
-                        Русский
-                    </a>
-                    <a href="`+linkEN+`" rel="nofollow" title="English" class="vkify-footer-lang">
-						English
-                    </a>
-                    <a href="`+linkUA+`" rel="nofollow" title="Українcька" class="vkify-footer-lang">
-                        Українcька
-                    </a>
-                    <a href="/language" class="vkify-footer-lang">all languages »</a>
-            </p>
-            <br>`;
-
-    const footer = document.querySelectorAll('.page_footer');
-    footer.forEach(foot => {
-        foot.innerHTML = vkfooter
-    });
+        toggleMusic();
+        }
     if (window.location.pathname.endsWith('/settings') && window.location.search === '?vkify') {
         const vkify_settings = `
             <div id="wrapH">
@@ -297,34 +439,4 @@ border-top: 1px solid #517295;
         document.getElementById('vk2012').checked = (/true/).test(localStorage.getItem('vk2012'));
         document.getElementById('realvkify').checked = (/true/).test(localStorage.getItem('realvkify'));
     }});
-
-    /* опенвк не существует, очень сырая функция, не советую */
-    if (realvkify == 'true') {
-    function replovk(node) {
-        if (node.nodeType === Node.TEXT_NODE) {
-            node.nodeValue = node.nodeValue.replace(/OpenVK/gi, 'ВКонтакте');
-            node.nodeValue = node.nodeValue.replace(/опенвк/gi, 'ВКонтакте');
-            node.nodeValue = node.nodeValue.replace(/опен вк/gi, 'ВКонтакте');
-            node.nodeValue = node.nodeValue.replace(/open vk/gi, 'ВКонтакте');
-        } else {
-            node.childNodes.forEach(replovk);
-        }
-    }
-    function observe() {
-        const observer = new MutationObserver((mutations) => {
-            mutations.forEach((mutation) => {
-                mutation.addedNodes.forEach((node) => {
-                    replovk(node);
-                });
-            });
-        });
-
-        observer.observe(document.body, {
-            childList: true,
-            subtree: true
-        });
-    }
-    observe();
-    replovk(document.body);
-    }
 })();

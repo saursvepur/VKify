@@ -352,7 +352,6 @@ input[type~="search"][name~="query"] {
                 characterDataOldValue: true
             });
         }
-        if (enable_vk2012 == 'true') {
         function toggleMusic() {
             const headerMusicBtn = document.querySelector('.headerMusicBtn');
 
@@ -384,7 +383,6 @@ input[type~="search"][name~="query"] {
                 }, 50);
             }
         toggleMusic();
-        }
     if (window.location.pathname.endsWith('/settings') && window.location.search === '?vkify') {
         const vkify_settings = `
             <div id="wrapH">

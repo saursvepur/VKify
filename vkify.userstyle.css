@@ -269,6 +269,8 @@ body.scrolled .toTop:hover,
 .header_navigation #search_box {
   background: none;
 }
-
+#ajax_audio_player {
+  display: none;	
+}
 
 }

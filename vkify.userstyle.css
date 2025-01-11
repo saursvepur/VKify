@@ -250,7 +250,7 @@ body.scrolled .toTop:hover,
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  margin-left: -30px;
+  margin-left: 54px;
   background-position-x: -96px;
 }
 
@@ -258,9 +258,17 @@ body.scrolled .toTop:hover,
   background-position-x: 0px;
 }
 
-.headerMusicBtn.closed {
-  background-position-x: 0px;
-  display: none;
+.header_navigation #search_box #search_box_fr form, .header_navigation #search_box #search_box_fr #search_and_one_more_wrapper {
+  margin-left: -129px;
 }
+
+.page_header #search_box input[type="search"] {
+  width: 175px;
+}
+
+.header_navigation #search_box {
+  background: none;
+}
+
 
 }

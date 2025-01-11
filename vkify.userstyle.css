@@ -1,3 +1,4 @@
+@-moz-document domain("ovk.to"), domain("openvk.xyz") {
 .musicIcon {
 	background-repeat: no-repeat;
 	cursor: pointer;
@@ -257,6 +258,9 @@ body.scrolled .toTop:hover,
   background-position-x: 0px;
 }
 
-#ajax_audio_player {
+.headerMusicBtn.closed {
+  background-position-x: 0px;
   display: none;
+}
+
 }

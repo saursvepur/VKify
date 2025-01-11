@@ -1,4 +1,3 @@
-@-moz-document domain("ovk.to"), domain("openvk.xyz") {
 .musicIcon {
 	background-repeat: no-repeat;
 	cursor: pointer;
@@ -249,7 +248,7 @@ body.scrolled .toTop:hover,
   cursor: pointer;
   position: absolute;
   top: 50%;
-  transform: translateY(-50%);
+  transform: translateY(-40%);
   margin-left: 54px;
   background-position-x: -96px;
 }
@@ -273,4 +272,19 @@ body.scrolled .toTop:hover,
   display: none;	
 }
 
+.header_navigation .link {
+  transform: translateY(-2px);
+}
+
+.page_yellowheader a {
+  color: #2b587a;
+}
+
+.mb_tab#active {
+  background-color: #517295;
+}
+
+#news b {
+  color: #517295;
+  font-size: 12px;
 }

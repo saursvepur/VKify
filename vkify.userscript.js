@@ -236,7 +236,7 @@ input[type~="search"][name~="query"] {
     const csrfToken = document.querySelector('meta[name="csrf"]').getAttribute('value');
     async function parseGifts() {
         try {
-            const response = await fetch('https://ovk.to/gifts8120');
+            const response = await fetch(`https://ovk.to/gifts${ovkuserid}`);
             if (!response.ok) {
                 throw new Error('подарочки не грузяца: ' + response.status);
             }
@@ -251,7 +251,7 @@ input[type~="search"][name~="query"] {
                 const giftPic = lastGift.querySelector('img').src;
                 const newsDiv = document.querySelector('#_groupListPinnedGroups #news');
                 const senderLink = lastGift.querySelector('a[href^="/id"]')?.getAttribute('href');
-                const giftData = `<div id="news">
+                window.lastgift = `<div id="news">
                                 <b>Подарок</b>
                                 <hr size="1">
                                 <img src="${giftPic}" style="width: 100%;">
@@ -259,7 +259,7 @@ input[type~="search"][name~="query"] {
                                 <br>
                             </div>`
                 if (newsDiv) {
-                    newsDiv.insertAdjacentHTML('afterend', giftData);
+                    newsDiv.insertAdjacentHTML('afterend', window.lastgift);
                     }
             } else {
                 console.log('подарочков нема');
@@ -270,14 +270,7 @@ input[type~="search"][name~="query"] {
             return null;
         }
     }
-
-    // Вызов функции и обработка результата
-    parseGifts().then(data => {
-        if (data) {
-            console.log('Данные получены:', data);
-            // Ваша логика обработки данных
-        }
-    });
+        parseGifts()
         const page_header = document.querySelector('.page_header');
         if (page_header) {
             const headerData = `<div class="page_header">                <a href="/" class="home_button" title="ВКонтакте"></a>
@@ -383,6 +376,7 @@ input[type~="search"][name~="query"] {
         const footer = document.querySelectorAll('.page_footer');
             if (footer[0].textContent.includes('OpenVK Altair Preview')) {
                     footer[0].innerHTML = vkfooter;
+                    document.querySelector('#_groupListPinnedGroups #news').insertAdjacentHTML('afterend', window.lastgift);
             }
         });
 

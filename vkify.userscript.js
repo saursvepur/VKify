@@ -234,6 +234,50 @@ input[type~="search"][name~="query"] {
     window.addEventListener('DOMContentLoaded', () => {
     const ovkuserid = window.openvk.current_id;
     const csrfToken = document.querySelector('meta[name="csrf"]').getAttribute('value');
+    async function parseGifts() {
+        try {
+            const response = await fetch('https://ovk.to/gifts8120');
+            if (!response.ok) {
+                throw new Error('подарочки не грузяца: ' + response.status);
+            }
+
+            const html = await response.text();
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(html, 'text/html');
+
+            const lastGift = doc.querySelector('.scroll_node.content');
+            if (lastGift) {
+                const senderName = lastGift.querySelector('a[href^="/id"]').textContent.trim();
+                const giftPic = lastGift.querySelector('img').src;
+                const newsDiv = document.querySelector('#_groupListPinnedGroups #news');
+                const senderLink = lastGift.querySelector('a[href^="/id"]')?.getAttribute('href');
+                const giftData = `<div id="news">
+                                <b>Подарок</b>
+                                <hr size="1">
+                                <img src="${giftPic}" style="width: 100%;">
+                                <text>Отправитель: <a href="${senderLink}">${senderName}</a></text>
+                                <br>
+                            </div>`
+                if (newsDiv) {
+                    newsDiv.insertAdjacentHTML('afterend', giftData);
+                    }
+            } else {
+                console.log('подарочков нема');
+                return null;
+            }
+        } catch (error) {
+            console.error('подарочки не грузяца:', error);
+            return null;
+        }
+    }
+
+    // Вызов функции и обработка результата
+    parseGifts().then(data => {
+        if (data) {
+            console.log('Данные получены:', data);
+            // Ваша логика обработки данных
+        }
+    });
         const page_header = document.querySelector('.page_header');
         if (page_header) {
             const headerData = `<div class="page_header">                <a href="/" class="home_button" title="ВКонтакте"></a>
@@ -436,5 +480,6 @@ input[type~="search"][name~="query"] {
         document.getElementById('vkify_settings').checked = (/true/).test(localStorage.getItem('enable_vkify_settings'));
         document.getElementById('vk2012').checked = (/true/).test(localStorage.getItem('vk2012'));
         document.getElementById('realvkify').checked = (/true/).test(localStorage.getItem('realvkify'));
-    }});
+    }
+    });
 })();

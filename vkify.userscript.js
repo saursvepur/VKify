@@ -236,7 +236,7 @@ input[type~="search"][name~="query"] {
     const csrfToken = document.querySelector('meta[name="csrf"]').getAttribute('value');
     async function parseGifts() {
         try {
-            const response = await fetch(`https://ovk.to/gifts${ovkuserid}`);
+            const response = await fetch(`/gifts${ovkuserid}`);
             if (!response.ok) {
                 throw new Error('подарочки не грузяца: ' + response.status);
             }
@@ -306,7 +306,7 @@ input[type~="search"][name~="query"] {
                                 <a href="/apps?act=list">игры </a>
                             </div>
         <div class="link" id="headerMusicLinkDiv" style="margin-right: 28px;">
-        <div class="headerMusicBtn paused" id="headerMusicBtn"></div><a id="headerMusicLink" href="/audios${ovkuserid}" aria-expanded="false">музыка</a></div>
+        <div class="headerMusicBtn paused" id="headerMusicBtn"></div><a id="headerMusicLink" href="/audios${ovkuserid}" style="color: #FFFFFF;" aria-expanded="false">музыка</a></div>
                             <div class="link">
                                 <a href="/support">помощь </a>
                             </div>

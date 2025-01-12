@@ -219,6 +219,26 @@ input[type~="search"][name~="query"] {
   border: 1px solid #4e729a !important;
   border-left: 0px !important;
 }
+.page_yellowheader a {
+  color: #2b587a;
+}
+
+.mb_tab#active {
+  background-color: #517295 !important;
+}
+
+#news b {
+  color: #517295 !important;
+}
+
+.bigPlayerWrapper span, .bigPlayerWrapper a {
+  color: #45688E !important;
+}
+
+.bigPlayer .trackInfo a {
+  font-weight: bold !important;
+  color: #2B597D !important;
+}
 `;
     var copydate = '2006-2007';
     if (enable_vk2012 == 'true') {
@@ -232,6 +252,7 @@ input[type~="search"][name~="query"] {
         }
     }
     window.addEventListener('DOMContentLoaded', () => {
+
     const ovkuserid = window.openvk.current_id;
     const csrfToken = document.querySelector('meta[name="csrf"]').getAttribute('value');
     async function parseGifts() {
@@ -306,7 +327,7 @@ input[type~="search"][name~="query"] {
                                 <a href="/apps?act=list">игры </a>
                             </div>
         <div class="link" id="headerMusicLinkDiv" style="margin-right: 28px;">
-        <div class="headerMusicBtn paused" id="headerMusicBtn"></div><a id="headerMusicLink" href="/audios${ovkuserid}" style="color: #FFFFFF;" aria-expanded="false">музыка</a></div>
+        <div class="headerMusicBtn paused" id="headerMusicBtn"></div><a href="/audios${ovkuserid}" style="color: #FFFFFF;">музыка</a></div>
                             <div class="link">
                                 <a href="/support">помощь </a>
                             </div>

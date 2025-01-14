@@ -232,11 +232,7 @@ input[type~="search"][name~="query"] {
   border-left: 0px !important;
 }
 .page_yellowheader a {
-  color: #2b587a;
-}
-
-.mb_tab#active {
-  background-color: #517295 !important;
+  color: #2b587a !important;
 }
 
 #news b {
@@ -264,6 +260,23 @@ input[type~="search"][name~="query"] {
         }
     }
     window.addEventListener('DOMContentLoaded', () => {
+        /* замена счётчиков новых уведомлений */
+document.querySelectorAll('object[type="internal/link"]').forEach(obj => {
+    const boldElement = obj.querySelector('b');
+    if (boldElement && !isNaN(boldElement.textContent)) {
+        const number = boldElement.textContent;
+        obj.innerHTML = `+${number}`;
+        obj.style.fontWeight = 'bold';
+        obj.style.backgroundColor = '#eee';
+        obj.style.lineHeight = '10px';
+        obj.style.margin = '-1px 3px 0 0';
+        obj.style.padding = '2px';
+        obj.style.borderRadius = '2px';
+        obj.style.height = '11px';
+        obj.style.color = '#47698f';
+        obj.style.display = 'inline-block';
+    }
+});
 
     const ovkuserid = window.openvk.current_id;
     const csrfToken = document.querySelector('meta[name="csrf"]').getAttribute('value');
@@ -410,6 +423,23 @@ input[type~="search"][name~="query"] {
             if (footer[0].textContent.includes('OpenVK Altair Preview')) {
                     footer[0].innerHTML = vkfooter;
                     document.querySelector('#_groupListPinnedGroups #news').insertAdjacentHTML('afterend', window.lastgift);
+                /* замена счётчиков новых уведомлений */
+                document.querySelectorAll('object[type="internal/link"]').forEach(obj => {
+                    const boldElement = obj.querySelector('b');
+                    if (boldElement && !isNaN(boldElement.textContent)) {
+                        const number = boldElement.textContent;
+                        obj.innerHTML = `+${number}`;
+                        obj.style.fontWeight = 'bold';
+                        obj.style.backgroundColor = '#eee';
+                        obj.style.lineHeight = '10px';
+                        obj.style.margin = '-1px 3px 0 0';
+                        obj.style.padding = '2px';
+                        obj.style.borderRadius = '2px';
+                        obj.style.height = '11px';
+                        obj.style.color = '#47698f';
+                        obj.style.display = 'inline-block';
+                    }
+                });
             }
         });
 
@@ -483,7 +513,7 @@ input[type~="search"][name~="query"] {
 						  <span class="nobold">Использовать header #2</span>
 						<br><br>
 						  <input type="checkbox" checked="" id="enablefartscroll">
-						  <label class="nobold" for="realvkify">Fartscroll</label>
+						  <label class="nobold" for="enablefartscroll">Fartscroll</label>
 						  <span>Удалённая фича OpenVK</span>
 						<br>
 						<br>

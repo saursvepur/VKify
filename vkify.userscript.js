@@ -26,6 +26,7 @@
     const realvkify = localStorage.getItem('realvkify');
     const enablefartscroll = localStorage.getItem('enablefartscroll');
     const enablevkemoji = localStorage.getItem('enablevkemoji');
+    const proxyvkemoji = localStorage.getItem('proxyvkemoji');
 
     if (!(enable_setts)) {
         localStorage.setItem('enable_vkify_settings', 'true')
@@ -44,10 +45,18 @@
         localStorage.setItem('enablefartscroll', 0)
     }
     if (!(enablevkemoji)) {
-        localStorage.setItem('enablevkemoji', 1)
+        localStorage.setItem('enablevkemoji', 'true')
+    }
+    if (!(proxyvkemoji)) {
+        localStorage.setItem('proxyvkemoji', 'true')
+    }
+    if (proxyvkemoji == 'true') {
+        var vkemojiserver = 'https://koke228.ru/vkemoji';
+    } else {
+        var vkemojiserver = 'https://vk.com/images/emoji';
     }
     if (enable_setts == 'true') {
-        var vkifysett = '<a href="/settings?vkify" target="_blank" class="link">настройки VKify</a>';
+       var vkifysett = '<a href="/settings?vkify" target="_blank" class="link">настройки VKify</a>';
     } else {
        var vkifysett = '';
     }
@@ -448,7 +457,7 @@ document.querySelectorAll('object[type="internal/link"]').forEach(obj => {
                 images.forEach(img => {
                     if (img.src.includes('https://abs.twimg.com/emoji/v2/72x72/')) {
                         const fileName = img.src.split('/').pop().replace('.png', '');
-                        img.src = `https://vk.com/images/emoji/${unicodeToSurrogatePair(fileName)}.png`;
+                        img.src = `${vkemojiserver}/${unicodeToSurrogatePair(fileName)}.png`;
                     }
                 });
             }
@@ -570,6 +579,9 @@ document.querySelectorAll('object[type="internal/link"]').forEach(obj => {
 						  <input type="checkbox" checked="" id="enablevkemoji">
 						  <label class="nobold" for="enablevkemoji">Использовать смайлики из ВКонтакте</label>
 						  <span> - прекрасно и неповторимо</span>
+						  <input type="checkbox" checked="" style="margin-left: 25px;" id="proxyvkemoji">
+						  <label class="nobold" for="proxyvkemoji">Проксировать смайлики</label>
+						  <span> - я не знаю зачем, но они будут сохраняться локально на сервере, да и шоб вк не видел ваш айпишник</span>
 						<br>
 						<br>
 						<input value="Сохранить" class="button" type="submit" id="save">
@@ -592,6 +604,7 @@ document.querySelectorAll('object[type="internal/link"]').forEach(obj => {
         NewNotification('VKify', 'Настройки сохранены!', popupimg, () => {}, 5000, false);
         localStorage.setItem('enablefartscroll', document.getElementById('enablefartscroll').checked);
         localStorage.setItem('enablevkemoji', document.getElementById('enablevkemoji').checked);
+        localStorage.setItem('proxyvkemoji', document.getElementById('proxyvkemoji').checked);
         location.reload();
     }
         document.getElementById('save').addEventListener('click', saveSettings);
@@ -600,6 +613,7 @@ document.querySelectorAll('object[type="internal/link"]').forEach(obj => {
         document.getElementById('realvkify').checked = (/true/).test(localStorage.getItem('realvkify'));
         document.getElementById('enablefartscroll').checked = (/true/).test(localStorage.getItem('enablefartscroll'));
         document.getElementById('enablevkemoji').checked = (/true/).test(localStorage.getItem('enablevkemoji'));
+        document.getElementById('proxyvkemoji').checked = (/true/).test(localStorage.getItem('proxyvkemoji'));
     }
     });
 })();

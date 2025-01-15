@@ -25,6 +25,7 @@
     const vk2012_header_type = localStorage.getItem('vk2012_header_type');
     const realvkify = localStorage.getItem('realvkify');
     const enablefartscroll = localStorage.getItem('enablefartscroll');
+    const enablevkemoji = localStorage.getItem('enablevkemoji');
 
     if (!(enable_setts)) {
         localStorage.setItem('enable_vkify_settings', 'true')
@@ -41,6 +42,9 @@
     }
     if (!(enablefartscroll)) {
         localStorage.setItem('enablefartscroll', 0)
+    }
+    if (!(enablevkemoji)) {
+        localStorage.setItem('enablevkemoji', 1)
     }
     if (enable_setts == 'true') {
         var vkifysett = '<a href="/settings?vkify" target="_blank" class="link">настройки VKify</a>';
@@ -419,6 +423,38 @@ document.querySelectorAll('object[type="internal/link"]').forEach(obj => {
             const footer = document.querySelectorAll('.page_footer');
             footer[0].innerHTML = vkfooter;
 
+        // я чё знаю чтоле что это, это нейронка сделала конвертер
+        function unicodeToSurrogatePair(unicode) {
+            const codePoint = parseInt(unicode, 16);
+
+            if (codePoint < 0x10000) {
+                return unicode
+            }
+
+            const offset = codePoint - 0x10000;
+            const highSurrogate = ((offset >> 10) & 0x3FF) + 0xD800;
+            const lowSurrogate = (offset & 0x3FF) + 0xDC00;
+
+            return [
+                highSurrogate.toString(16).toUpperCase(),
+                lowSurrogate.toString(16).toUpperCase(),
+            ].join("");
+        }
+
+        function vkifyEmoji() {
+            if (enablevkemoji == 'true') {
+                const images = document.querySelectorAll('img');
+
+                images.forEach(img => {
+                    if (img.src.includes('https://abs.twimg.com/emoji/v2/72x72/')) {
+                        const fileName = img.src.split('/').pop().replace('.png', '');
+                        img.src = `https://vk.com/images/emoji/${unicodeToSurrogatePair(fileName)}.png`;
+                    }
+                });
+            }
+        }
+        vkifyEmoji();
+
         let mo = new MutationObserver(function(mutations) {
         const footer = document.querySelectorAll('.page_footer');
             if (footer[0].textContent.includes('OpenVK Altair Preview')) {
@@ -455,6 +491,7 @@ document.querySelectorAll('object[type="internal/link"]').forEach(obj => {
     }
             replovk(document.body);
     }
+        vkifyEmoji();
         });
 
         if (footer) {
@@ -528,7 +565,11 @@ document.querySelectorAll('object[type="internal/link"]').forEach(obj => {
 						<br><br>
 						  <input type="checkbox" checked="" id="enablefartscroll">
 						  <label class="nobold" for="enablefartscroll">Fartscroll</label>
-						  <span>Удалённая фича OpenVK</span>
+						  <span> - удалённая фича OpenVK</span>
+						<br><br>
+						  <input type="checkbox" checked="" id="enablevkemoji">
+						  <label class="nobold" for="enablevkemoji">Использовать смайлики из ВКонтакте</label>
+						  <span> - прекрасно и неповторимо</span>
 						<br>
 						<br>
 						<input value="Сохранить" class="button" type="submit" id="save">
@@ -550,6 +591,7 @@ document.querySelectorAll('object[type="internal/link"]').forEach(obj => {
         localStorage.setItem('vk2012_header_type', document.querySelector('input[name="vk2012head"]:checked').value);
         NewNotification('VKify', 'Настройки сохранены!', popupimg, () => {}, 5000, false);
         localStorage.setItem('enablefartscroll', document.getElementById('enablefartscroll').checked);
+        localStorage.setItem('enablevkemoji', document.getElementById('enablevkemoji').checked);
         location.reload();
     }
         document.getElementById('save').addEventListener('click', saveSettings);
@@ -557,6 +599,7 @@ document.querySelectorAll('object[type="internal/link"]').forEach(obj => {
         document.getElementById('vk2012').checked = (/true/).test(localStorage.getItem('vk2012'));
         document.getElementById('realvkify').checked = (/true/).test(localStorage.getItem('realvkify'));
         document.getElementById('enablefartscroll').checked = (/true/).test(localStorage.getItem('enablefartscroll'));
+        document.getElementById('enablevkemoji').checked = (/true/).test(localStorage.getItem('enablevkemoji'));
     }
     });
 })();

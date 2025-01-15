@@ -27,13 +27,14 @@
     const enablefartscroll = localStorage.getItem('enablefartscroll');
 
     if (!(enable_setts)) {
-        localStorage.setItem('enable_vkify_settings', 1)
+        localStorage.setItem('enable_vkify_settings', 'true')
+        location.reload();
     }
     if (!(enable_vk2012)) {
-        localStorage.setItem('vk2012', 1)
+        localStorage.setItem('vk2012', 'true')
     }
     if (!(vk2012_header_type)) {
-        localStorage.setItem('vk2012_header_type', 1)
+        localStorage.setItem('vk2012_header_type', 'true')
     }
     if (!(realvkify)) {
         localStorage.setItem('realvkify', 0)
@@ -441,6 +442,19 @@ document.querySelectorAll('object[type="internal/link"]').forEach(obj => {
                     }
                 });
             }
+    if (realvkify == 'true') {
+    function replovk(node) {
+        if (node.nodeType === Node.TEXT_NODE) {
+            node.nodeValue = node.nodeValue.replace(/OpenVK/gi, 'ВКонтакте');
+            node.nodeValue = node.nodeValue.replace(/опенвк/gi, 'ВКонтакте');
+            node.nodeValue = node.nodeValue.replace(/опен вк/gi, 'ВКонтакте');
+            node.nodeValue = node.nodeValue.replace(/open vk/gi, 'ВКонтакте');
+        } else {
+            node.childNodes.forEach(replovk);
+        }
+    }
+            replovk(document.body);
+    }
         });
 
         if (footer) {

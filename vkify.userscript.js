@@ -8,6 +8,8 @@
 // @match        *://openvk.xyz/*
 // @run-at       document-start
 // @grant        none
+// @updateURL    https://raw.githubusercontent.com/koke228666/VKify/refs/heads/main/vkify.userscript.js
+// @downloadURL  https://raw.githubusercontent.com/koke228666/VKify/refs/heads/main/vkify.userscript.js
 // ==/UserScript==
 
 (function() {

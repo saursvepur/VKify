@@ -12,7 +12,14 @@
 </p>
 
 # Установка
-Знач так, для начала ставим тему ВКонтакте 2007  [тут](https://ovk.to/settings?act=interface), $$\Huge\color{red}!!!\spaceПОСТАВЬТЕ\spaceТЕМУ\spaceВКОНТАКТЕ\space2007,\spaceЭТО\spaceВАЖНО!\spaceВСЕ\spaceСТИЛИ\spaceПРЕДНАЗНАЧЕНЫ\spaceТОЛЬКО\spaceДЛЯ\spaceНЕЁ,\spaceСОВМЕСТИМОСТЬ\spaceС\spaceДРУГИМИ\spaceТЕМАМИ\spaceНЕ\spaceГАРАНТИРУЕТСЯ\space!!!$$далее идём и ставим [vkify.user.js](https://raw.githubusercontent.com/koke228666/VKify/refs/heads/main/vkify.user.js) (сначала было необязательно, но сейчас стоило бы) и [vkify.user.css](https://raw.githubusercontent.com/koke228666/VKify/refs/heads/main/vkify.user.css)
+Знач так, для начала ставим тему ВКонтакте 2007  [тут](https://ovk.to/settings?act=interface),
+$$\Huge\color{red}!!!\spaceПОСТАВЬТЕ\spaceТЕМУ\spaceВКОНТАКТЕ\space2007,\spaceЭТО\spaceВАЖНО!$$
+$$\Huge\color{red}ВСЕ\spaceСТИЛИ\spaceПРЕДНАЗНАЧЕНЫ\spaceТОЛЬКО\spaceДЛЯ\spaceНЕЁ,$$
+$$\Huge\color{red}СОВМЕСТИМОСТЬ\spaceС\spaceДРУГИМИ\spaceТЕМАМИ\spaceНЕ\spaceГАРАНТИРУЕТСЯ\space!!!$$
+### ПОСТАВЬТЕ ТЕМУ ВКОНТАКТЕ 2007!!!!!! 
+###                                                     ПОСТАВЬТЕ ТЕМУ ВКОНТАКТЕ 2007!!!!!!
+### ПОСТАВЬТЕ ТЕМУ ВКОНТАКТЕ 2007!!!!!! 
+далее идём и ставим [vkify.user.js](https://raw.githubusercontent.com/koke228666/VKify/refs/heads/main/vkify.user.js) (сначала было необязательно, но сейчас стоило бы) и [vkify.user.css](https://raw.githubusercontent.com/koke228666/VKify/refs/heads/main/vkify.user.css)
 
 
 Всьо

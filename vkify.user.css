@@ -42,7 +42,8 @@
 
 .audioEntry.nowPlaying {
 	background: #5A7DA3;
-	outline: 1px solid #4D6782;
+	/* outline: 1px solid #4D6782; */
+	outline: none !important;
 	box-sizing: border-box;
 }
 
@@ -284,7 +285,7 @@ body.scrolled .toTop:hover,
 }
 
 .header_navigation #search_box #search_box_fr form, .header_navigation #search_box #search_box_fr #search_and_one_more_wrapper {
-  margin-left: -129px;
+  margin-left: -172.5px;
 }
 
 .page_header #search_box input[type="search"] {

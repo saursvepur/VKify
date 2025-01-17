@@ -35,22 +35,26 @@
         location.reload();
     }
     if (!(enable_vk2012)) {
-        localStorage.setItem('vk2012', 'true')
+        localStorage.setItem('vk2012', 'true');
+         const enable_vk2012 = 'true';
     }
     if (!(vk2012_header_type)) {
-        localStorage.setItem('vk2012_header_type', 'true')
+        localStorage.setItem('vk2012_header_type', 1);
+         const vk2012_header_type = 1;
     }
     if (!(realvkify)) {
-        localStorage.setItem('realvkify', 0)
+        localStorage.setItem('realvkify', 0);
     }
     if (!(enablefartscroll)) {
-        localStorage.setItem('enablefartscroll', 0)
+        localStorage.setItem('enablefartscroll', 0);
     }
     if (!(enablevkemoji)) {
-        localStorage.setItem('enablevkemoji', 'true')
+        localStorage.setItem('enablevkemoji', 'true');
+         const enablevkemoji = 'true';
     }
     if (!(proxyvkemoji)) {
-        localStorage.setItem('proxyvkemoji', 'true')
+        localStorage.setItem('proxyvkemoji', 'true');
+         const proxyvkemoji = 'true';
     }
     if (proxyvkemoji == 'true') {
         var vkemojiserver = 'https://koke228.ru/vkemoji';
@@ -276,26 +280,34 @@ input[type~="search"][name~="query"] {
         }
     }
     window.addEventListener('DOMContentLoaded', () => {
-        /* замена счётчиков новых уведомлений */
-document.querySelectorAll('object[type="internal/link"]').forEach(obj => {
-    const boldElement = obj.querySelector('b');
-    if (boldElement && !isNaN(boldElement.textContent)) {
-        const number = boldElement.textContent;
-        obj.innerHTML = `+${number}`;
-        obj.style.fontWeight = 'bold';
-        obj.style.backgroundColor = '#eee';
-        obj.style.lineHeight = '10px';
-        obj.style.margin = '-1px 3px 0 0';
-        obj.style.padding = '2px';
-        obj.style.borderRadius = '2px';
-        obj.style.height = '11px';
-        obj.style.color = '#47698f';
-        obj.style.display = 'inline-block';
-    }
-});
-
     const ovkuserid = window.openvk.current_id;
     const csrfToken = document.querySelector('meta[name="csrf"]').getAttribute('value');
+    document.querySelector('link[rel="icon"], link[rel="shortcut icon"]').setAttribute("href", "data:image/x-icon;base64,AAABAAEAEBAAAAEAIABoBAAAFgAAACgAAAAQAAAAIAAAAAEAIAAAAAAAQAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAJxzUCCgd1N5pn5a/6d+W/+fdlKkAAAAAJtyTw6fdlJzpX1Z56Z+Wv+cc1CqAAAAAAAAAAAAAAAAAAAAAJ10UTalfFjRrIRf/6+HYv+vh2L/qYFc/6F4VDiielaYqoFd/66GYf+shF//nnVS/wAAAAAAAAAAAAAAAJ10UUSnflrtroZh/7CIY/+wiGP/sIhj/66GYf+shF/wrYVg/6+HYv+thWD/pHtX/5VsSpEAAAAAAAAAAJxzUDGnflrzroZh/7CIY/+wiGP/sIhj/7CIY/+wiGP/sIhj/7CIY/+wiGP/qIBb/5lwTZuTaUcMAAAAAJpxTiGkfFjUrYVg/66GYf+shF//r4di/7CIY/+wiGP/r4di/6yEX/+vh2L/r4di/6Z9WuMAAAAAAAAAAAAAAACfdlKFq4Ne/66GYf+of1v/pXtY2KuDXv+wiGP/sIhj/6uDXv+lfVnYqYFd/66GYf+qgV3snXRQPgAAAACacU4vp35a7a+HYv+rg17/nnZTzZpyTyqnf1r/sIhj/7CIY/+nf1r/m3JPKqF3VOuthGD/roZh/6V9WOOacU4vnXRRlKyDX/+vh2L/p35a/5huTFsAAAAAp39a/7CIY/+vh2L/pHxX/wAAAACWbUt4p39a/6+HYv+sg1//nXRRlJ10UfmpgFz/qYBc/511Uv+WbUoGmXBNTKd9Wv+rg17/qoFd/552UvgAAAAAlGtICJ51Uv+pgFz/qYBc/510UfmUa0ismnFO+plvTduUakhyAAAAAJVrSd2bck76nXNQ+ppxTvGUa0icAAAAAAAAAACUakhmmW9N45pxTvqUa0iiAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA//8AAP//AAD//wAA+CAAAPAAAADgAAAAwAAAAIADAACAAQAAAAAAAAQgAAAAIAAACDAAAP//AAD//wAA//8AAA==")
+        /* замена счётчиков новых сообщений/уведомлений/etc. */
+        document.querySelectorAll('object[type="internal/link"]').forEach(obj => {
+            const boldElement = obj.querySelector('b');
+            if (boldElement && !isNaN(boldElement.textContent)) {
+                const number = boldElement.textContent;
+                obj.innerHTML = `+${number}`;
+                obj.style.fontWeight = 'bold';
+                obj.style.backgroundColor = '#eee';
+                obj.style.lineHeight = '10px';
+                obj.style.margin = '-1px 3px 0 0';
+                obj.style.padding = '2px';
+                obj.style.borderRadius = '2px';
+                obj.style.height = '11px';
+                obj.style.color = '#47698f';
+                obj.style.display = 'inline-block';
+            }
+        });
+    /* переопределяем функцию замены фавикона, потому что я так захотел */
+    player.__setFavicon = function (state = 'playing') {
+        if(state == 'playing') {
+            document.querySelector('link[rel="icon"], link[rel="shortcut icon"]').setAttribute("href", "data:image/x-icon;base64,AAABAAEAEBAAAAEAIABoBAAAFgAAACgAAAAQAAAAIAAAAAEAIAAAAAAAQAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAJxzUCCgd1N5pn5a/6d+W/+fdlKkAAAAAJtyTw6fdlJzpX1Z56Z+Wv+cc1CqAAAAAAAAAAAAAAAAAAAAAJ10UTalfFjRrIRf/6+HYv+vh2L/qYFc/6F4VDiielaYqoFd/66GYf+shF//nnVS/wAAAAAAAAAAAAAAAJ10UUSnflrtroZh/7CIY/+wiGP/sIhj/66GYf+shF/wrYVg/6+HYv+thWD/pHtX/5VsSpEAAAAAAAAAAJxzUDGnflrzroZh/7CIY/+wiGP/sIhj/7CIY/+wiGP/sIhj/7CIY/+wiGP/qIBb/5lwTZuTaUcMAAAAAJpxTiGkfFjUrYVg/66GYf+shF//r4di/7CIY/+wiGP/r4di/6yEX/+vh2L/r4di/6Z9WuMAAAAAAAAAAAAAAACfdlKFq4Ne/66GYf+of1v/pXtY2KuDXv+wiGP/sIhj/6uDXv+lfVnYqYFd/66GYf+qgV3snXRQPgAAAACacU4vp35a7a+HYv+rg17/nnZTzZpyTyqnf1r/sIhj/7CIY/+nf1r/m3JPKqF3VOuthGD/roZh/6V9WOOacU4vnXRRlKyDX/+vh2L/p35a/5huTFsAAAAAp39a/7CIY/+vh2L/pHxX/wAAAACWbUt4p39a/6+HYv+sg1//nXRRlJ10UfmpgFz/qYBc/511Uv+WbUoGmXBNTKd9Wv+rg17/qoFd/552UvgAAAAAlGtICJ51Uv+pgFz/qYBc/510UfmUa0ismnFO+plvTduUakhyAAAAAJVrSd2bck76nXNQ+ppxTvGUa0icAAAAAAAAAACUakhmmW9N45pxTvqUa0iiAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA//8AAP//AAD//wAA+CAAAPAAAADgAAAAwAAAAIADAACAAQAAAAAAAAQgAAAAIAAACDAAAP//AAD//wAA//8AAA==")
+        } else {
+            document.querySelector('link[rel="icon"], link[rel="shortcut icon"]').setAttribute("href", "data:image/x-icon;base64,AAABAAEAEBAAAAEAIABoBAAAFgAAACgAAAAQAAAAIAAAAAEAIAAAAAAAQAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAJxzUCCgd1N5pn5a/6d+W/+fdlKkAAAAAJtyTw6fdlJzpX1Z56Z+Wv+cc1CqAAAAAAAAAAAAAAAAAAAAAJ10UTalfFjRrIRf/6+HYv+vh2L/qYFc/6F4VDiielaYqoFd/66GYf+shF//nnVS/wAAAAAAAAAAAAAAAJ10UUSnflrtroZh/7CIY/+wiGP/sIhj/66GYf+shF/wrYVg/6+HYv+thWD/pHtX/5VsSpEAAAAAAAAAAJxzUDGnflrzroZh/7CIY/+wiGP/sIhj/7CIY/+wiGP/sIhj/7CIY/+wiGP/qIBb/5lwTZuTaUcMAAAAAJpxTiGkfFjUrYVg/66GYf+shF//r4di/7CIY/+wiGP/r4di/6yEX/+vh2L/r4di/6Z9WuMAAAAAAAAAAAAAAACfdlKFq4Ne/66GYf+of1v/pXtY2KuDXv+wiGP/sIhj/6uDXv+lfVnYqYFd/66GYf+qgV3snXRQPgAAAACacU4vp35a7a+HYv+rg17/nnZTzZpyTyqnf1r/sIhj/7CIY/+nf1r/m3JPKqF3VOuthGD/roZh/6V9WOOacU4vnXRRlKyDX/+vh2L/p35a/5huTFsAAAAAp39a/7CIY/+vh2L/pHxX/wAAAACWbUt4p39a/6+HYv+sg1//nXRRlJ10UfmpgFz/qYBc/511Uv+WbUoGmXBNTKd9Wv+rg17/qoFd/552UvgAAAAAlGtICJ51Uv+pgFz/qYBc/510UfmUa0ismnFO+plvTduUakhyAAAAAJVrSd2bck76nXNQ+ppxTvGUa0icAAAAAAAAAACUakhmmW9N45pxTvqUa0iiAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA//8AAP//AAD//wAA+CAAAPAAAADgAAAAwAAAAIADAACAAQAAAAAAAAQgAAAAIAAACDAAAP//AAD//wAA//8AAA==")
+        }
+    }
     async function parseGifts() {
         try {
             const response = await fetch(`/gifts${ovkuserid}`);

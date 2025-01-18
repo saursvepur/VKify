@@ -6,6 +6,7 @@
   <img src="https://github.com/user-attachments/assets/10514054-325a-450f-868d-365455bd02de" alt="смайлики" />
   <img src="https://github.com/user-attachments/assets/eb6129f9-3eca-48d7-b76e-f56c1d7e741d" alt="404" />
   <img src="https://github.com/user-attachments/assets/51f14a67-5ace-4ce1-b958-d3ad764b5f45" alt="кнопачки прикрепления" />
+  <img src="https://github.com/user-attachments/assets/1f1955fe-37f1-4579-b14f-d2ff65d78d9e" alt="пикер смайликов в лс" />
 </p>
 
 # Установка

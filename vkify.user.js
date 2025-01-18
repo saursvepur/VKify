@@ -69,7 +69,8 @@
     if (proxyvkemoji == 'true') {
         var vkemojiserver = 'https://koke228.ru/vkemoji';
     } else {
-        var vkemojiserver = 'https://vk.com/images/emoji';
+        /*var vkemojiserver = 'https://vk.com/images/emoji';*/
+        var vkemojiserver = 'https://vk.com/emoji/e'
     }
     if (enable_setts == 'true') {
        var vkifysett = '<a href="/settings?vkify" target="_blank" class="link">настройки VKify</a>';
@@ -564,7 +565,7 @@ vk2012flat_btns.innerHTML = `
             footer[0].innerHTML = vkfooter;
 
         // я чё знаю чтоле что это, это нейронка сделала конвертер
-        function unicodeToSurrogatePair(unicode) {
+        /*function unicodeToSurrogatePair(unicode) {
             const codePoint = parseInt(unicode, 16);
 
             if (codePoint < 0x10000) {
@@ -579,8 +580,17 @@ vk2012flat_btns.innerHTML = `
                 highSurrogate.toString(16).toUpperCase(),
                 lowSurrogate.toString(16).toUpperCase(),
             ].join("");
-        }
+        }*/
+        function uni2uhex(unicodeCode) {
+            const emoji = String.fromCodePoint(parseInt(unicodeCode, 16));
 
+            const utf8Bytes = new TextEncoder().encode(emoji);
+            const utf8Hex = Array.from(utf8Bytes)
+            .map(byte => byte.toString(16).padStart(2, '0'))
+            .join('');
+
+            return utf8Hex;
+        }
         function vkifyEmoji() {
             if (enablevkemoji == 'true') {
                 const images = document.querySelectorAll('img');
@@ -588,7 +598,7 @@ vk2012flat_btns.innerHTML = `
                 images.forEach(img => {
                     if (img.src.includes('https://abs.twimg.com/emoji/v2/72x72/')) {
                         const fileName = img.src.split('/').pop().replace('.png', '');
-                        img.src = `${vkemojiserver}/${unicodeToSurrogatePair(fileName)}.png`;
+                        img.src = `${vkemojiserver}/${uni2uhex(fileName)}.png`;
                     }
                 });
             }

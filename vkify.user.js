@@ -395,6 +395,7 @@ vk2012flat_btns.innerHTML = `
     window.addEventListener('DOMContentLoaded', () => {
     const ovkuserid = window.openvk.current_id;
     const csrfToken = document.querySelector('meta[name="csrf"]').getAttribute('value');
+    document.title = document.title.replace("OpenVK", "ВКонтакте");
 if (window.location.href.includes('im?sel=')) {
     var emojicss=document.createElement("link");
     emojicss.rel="stylesheet";
@@ -498,34 +499,20 @@ if (window.location.href.includes('im?sel=')) {
     }
     async function parseGifts() {
         try {
-            const response = await fetch(`/gifts${ovkuserid}`);
-            if (!response.ok) {
-                throw new Error('подарочки не грузяца: ' + response.status);
-            }
-
-            const html = await response.text();
-            const parser = new DOMParser();
-            const doc = parser.parseFromString(html, 'text/html');
-
-            const lastGift = doc.querySelector('.scroll_node.content');
-            if (lastGift) {
-                const senderName = lastGift.querySelector('a[href^="/id"]').textContent.trim();
-                const giftPic = lastGift.querySelector('img').src;
+            const gift_data = await window.OVKAPI.call("gifts.get", {"user_id": window.openvk.current_id, "count": 1});
+            if (!gift_data == "") {
+            const gift_sender = await window.OVKAPI.call("users.get", {"user_ids": gift_data[0]["from_id"]});
                 const newsDiv = document.querySelector('#_groupListPinnedGroups #news');
-                const senderLink = lastGift.querySelector('a[href^="/id"]')?.getAttribute('href');
                 window.lastgift = `<div id="news">
                                 <b>Подарок</b>
                                 <hr size="1">
-                                <img src="${giftPic}" style="width: 100%;">
-                                <text>Отправитель: <a href="${senderLink}">${senderName}</a></text>
+                                <img src="${gift_data[0]["gift"]["thumb_96"]}" style="width: 100%;">
+                                <text>Отправитель: <a href="/id${gift_sender[0]["id"]}">${gift_sender[0]["first_name"]} ${gift_sender[0]["last_name"]}</a></text>
                                 <br>
                             </div>`
                 if (newsDiv) {
                     newsDiv.insertAdjacentHTML('afterend', window.lastgift);
                     }
-            } else {
-                console.log('подарочков нема');
-                return null;
             }
         } catch (error) {
             console.error('подарочки не грузяца:', error);
@@ -711,6 +698,7 @@ if (window.location.href.includes('im?sel=')) {
             replovk(document.body);
     }
         vkifyEmoji();
+        document.title = document.title.replace("OpenVK", "ВКонтакте");
         });
 
         if (footer) {

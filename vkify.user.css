@@ -420,4 +420,7 @@ img[src*="/assets/packages/static/openvk/img/oxygen-icons/16x16/apps/amarok.png"
 img[src*="/assets/packages/static/openvk/img/oxygen-icons/16x16/actions/insert-link.png"] {
 	content: url("data:image/gif;base64,R0lGODlhEAAQAMQUAI2/VkR/NlGPQ73YoF6eUDdwKtvnzTlyLDx2L0F8NEyHPlOSRlaVSUmEO1mYSk+MQYu9VlybTUeCOT55MgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAEAABQALAAAAAAQABAAAAVQICWKRGmO6BgZrBGlqQNAEODAKAPsAIOPCx5gkRIYj8Lj8TFoNoXO5kMhrFYVDasW0JBsrZKAeCwcj1MJYeInmggnbApCiIgfhId4Yc9PhQAAOw==");
 }
+.cl_avatar img {
+  width: unset !important;
+}
 }

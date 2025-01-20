@@ -380,8 +380,6 @@ content: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAZAAAAGQCAIAAAAP3aGb
     if (flatplayerbtns == 'true') {
     document.head.appendChild(vk2012flat_btns);
     }
-        alert(adm_ava_repl)
-        alert(adm_ava)
     if (adm_ava_repl == 'true') {
         switch(String(adm_ava)) {
             case "1":

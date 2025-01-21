@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         VKify
 // @namespace    http://tampermonkey.net/
-// @version      1.1
+// @version      1.1.1
 // @description  Дополнительные штуки-друюки для VKify
 // @author       koke228
 // @match        *://ovk.to/*
@@ -886,7 +886,6 @@ if (window.location.href.includes('im?sel=')) {
         document.getElementById('flatplayerbtns').checked = (/true/).test(localStorage.getItem('flatplayerbtns'));
         document.getElementById('customheader').value = localStorage.getItem('customheader');
         document.getElementById('adm_ava_repl').checked = (/true/).test(localStorage.getItem('adm_ava_repl'));
-        document.getElementById('adm_ava').value = localStorage.getItem('adm_ava');
         const headradios = document.querySelectorAll(`input[type="radio"][name="vk2012head"]`);
         headradios.forEach(radio => {
             if (radio.value === localStorage.getItem('vk2012_header_type')) {

@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         VKify
 // @namespace    http://tampermonkey.net/
-// @version      1.2.1
+// @version      1.2.2
 // @description  Дополнительные штуки-друюки для VKify
 // @author       koke228
 // @match        *://ovk.to/*
@@ -476,7 +476,7 @@ u(document).on("click", "#attachpopup", async (e) => {
     const form = u(e.target).closest('form')
     const club = Number(e.currentTarget.dataset.club ?? 0)
     const msg = new CMessageBox({
-        title: tr('select_photo'),
+        title: tr('select_photo')+'<text style="font-size: 10px;"> (подписью будет то, что вы указали в поле для сообщения)</text>',
         body: \`
         <div class='attachment_selector'>
             <div class="topGrayBlock display_flex_row">
@@ -501,8 +501,15 @@ u(document).on("click", "#attachpopup", async (e) => {
         callbacks: [
             async () => {
                 if (window.phid !== '') {
+                   const textarea = document.querySelector('textarea[data-bind="value: messageContent, event: { keydown: onTextareaKeyPress }"][name="message"]');
+                   if (textarea !== null && textarea.value !== "") {
+                      var attachment_msg = textarea.value;
+                   }
+                   else {
+                      var attachment_msg = "";
+                   }
                     try {
-                        await window.OVKAPI.call("messages.send", {"attachment": window.phid, "peer_id": ${peerid}});
+                        await window.OVKAPI.call("messages.send", {"attachment": window.phid, "peer_id": ${peerid}, "message": attachment_msg});
                         location.reload();
                     } catch (error) {
                         console.error("attachment sending err:", error);

@@ -8,8 +8,8 @@
 // @match        *://openvk.xyz/*
 // @run-at       document-start
 // @grant        none
-// @updateURL    https://raw.githubusercontent.com/koke228666/VKify/refs/heads/main/vkify.userscript.js
-// @downloadURL  https://raw.githubusercontent.com/koke228666/VKify/refs/heads/main/vkify.userscript.js
+// @updateURL    https://raw.githubusercontent.com/koke228666/VKify/refs/heads/main/vkify.user.js
+// @downloadURL  https://raw.githubusercontent.com/koke228666/VKify/refs/heads/main/vkify.user.js
 // ==/UserScript==
 
 (function() {
@@ -471,7 +471,7 @@ if (window.location.href.includes('im?sel=')) {
     const imgpopup = document.createElement('script');
 imgpopup.textContent = `
 u(document).on("click", "#attachpopup", async (e) => {
-    window.phid = null
+    window.phid = ''
     const photos_per_page = 23
     const form = u(e.target).closest('form')
     const club = Number(e.currentTarget.dataset.club ?? 0)
@@ -500,9 +500,9 @@ u(document).on("click", "#attachpopup", async (e) => {
         buttons: [tr('send'), tr('close')],
         callbacks: [
             async () => {
-                if (window.phid !== null) {
+                if (window.phid !== '') {
                     try {
-                        await window.OVKAPI.call("messages.send", {"attachment": "photo"+window.phid, "peer_id": ${peerid}});
+                        await window.OVKAPI.call("messages.send", {"attachment": window.phid, "peer_id": ${peerid}});
                         location.reload();
                     } catch (error) {
                         console.error("attachment sending err:", error);
@@ -576,19 +576,33 @@ u(document).on("click", "#attachpopup", async (e) => {
     })
 
     // add photo
-    u(".ovk-diag-body .attachment_selector").on("click", ".album-photo", async (ev) => {
-		ev.preventDefault()
-		ev.stopPropagation()
-		const target = u(ev.target).closest('.album-photo')
-		const dataset = target.nodes[0].dataset
-		if (window.phid != dataset.attachmentdata) {
-			document.querySelector(".ovk-diag").querySelectorAll('.album-photo').forEach((element) => element.classList.remove('selected'));
-			target.addClass('selected')
-			window.phid = dataset.attachmentdata
-		} else {
-			target.removeClass('selected')
-		}
-    })
+u(".ovk-diag-body .attachment_selector").on("click", ".album-photo", async (ev) => {
+    ev.preventDefault();
+    ev.stopPropagation();
+
+    const target = u(ev.target).closest('.album-photo');
+    const dataset = target.nodes[0].dataset;
+    const ph_id = "photo"+dataset.attachmentdata;
+    let phArray = window.phid.split(',').filter(Boolean);
+    const index = phArray.indexOf(ph_id);
+
+    if (index === -1) {
+        target.addClass('selected');
+        phArray.push(ph_id);
+    } else {
+        target.removeClass('selected');
+        phArray.splice(index, 1);
+    }
+
+    window.phid = phArray.join(',');
+
+    document.querySelector(".ovk-diag").querySelectorAll('.album-photo').forEach((element) => {
+        const elementPhid = "photo"+element.dataset.attachmentdata;
+        if (!phArray.includes(elementPhid)) {
+            element.classList.remove('selected');
+        }
+    });
+});
 
     // "upload" button
     u(".ovk-diag-body #__pickerQuickUpload").on('change', (ev) => {
@@ -653,7 +667,11 @@ u(document).on("click", "#attachpopup", async (e) => {
     } else {
         var hdraudiobtn = ``
     }
+    if (window.location.href.includes('im?sel=')) {
+    document.querySelector('link[rel="icon"], link[rel="shortcut icon"]').setAttribute("href", "data:image/x-icon;base64,AAABAAEAEBAAAAEAIABoBAAAFgAAACgAAAAQAAAAIAAAAAEAIAAAAAAAQAQAABMLAAATCwAAAAAAAAAAAACrglzDq4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglzEq4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz//////7+ghP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc////////////v6CE/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz///////////////////////////////////////////+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc////////////////////////////////////////////q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP///////////////////////////////////////////6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz///////////////////////////////////////////+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc////////////////////////////////////////////q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP///////////////////////////////////////////6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglzDq4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglz/q4Jc/6uCXP+rglzDAAA+LwAAc3QAAHQ6AABhbgAAZD4AACAgAAAgIAAAICAAACAgAAByZAAAbGkAACAgAAAgIAAAICAAADwvAABmOg==")
+    } else {
     document.querySelector('link[rel="icon"], link[rel="shortcut icon"]').setAttribute("href", "data:image/x-icon;base64,AAABAAEAEBAAAAEAIABoBAAAFgAAACgAAAAQAAAAIAAAAAEAIAAAAAAAQAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAJxzUCCgd1N5pn5a/6d+W/+fdlKkAAAAAJtyTw6fdlJzpX1Z56Z+Wv+cc1CqAAAAAAAAAAAAAAAAAAAAAJ10UTalfFjRrIRf/6+HYv+vh2L/qYFc/6F4VDiielaYqoFd/66GYf+shF//nnVS/wAAAAAAAAAAAAAAAJ10UUSnflrtroZh/7CIY/+wiGP/sIhj/66GYf+shF/wrYVg/6+HYv+thWD/pHtX/5VsSpEAAAAAAAAAAJxzUDGnflrzroZh/7CIY/+wiGP/sIhj/7CIY/+wiGP/sIhj/7CIY/+wiGP/qIBb/5lwTZuTaUcMAAAAAJpxTiGkfFjUrYVg/66GYf+shF//r4di/7CIY/+wiGP/r4di/6yEX/+vh2L/r4di/6Z9WuMAAAAAAAAAAAAAAACfdlKFq4Ne/66GYf+of1v/pXtY2KuDXv+wiGP/sIhj/6uDXv+lfVnYqYFd/66GYf+qgV3snXRQPgAAAACacU4vp35a7a+HYv+rg17/nnZTzZpyTyqnf1r/sIhj/7CIY/+nf1r/m3JPKqF3VOuthGD/roZh/6V9WOOacU4vnXRRlKyDX/+vh2L/p35a/5huTFsAAAAAp39a/7CIY/+vh2L/pHxX/wAAAACWbUt4p39a/6+HYv+sg1//nXRRlJ10UfmpgFz/qYBc/511Uv+WbUoGmXBNTKd9Wv+rg17/qoFd/552UvgAAAAAlGtICJ51Uv+pgFz/qYBc/510UfmUa0ismnFO+plvTduUakhyAAAAAJVrSd2bck76nXNQ+ppxTvGUa0icAAAAAAAAAACUakhmmW9N45pxTvqUa0iiAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA//8AAP//AAD//wAA+CAAAPAAAADgAAAAwAAAAIADAACAAQAAAAAAAAQgAAAAIAAACDAAAP//AAD//wAA//8AAA==")
+    }
         /* замена счётчиков новых сообщений/уведомлений/etc. */
         document.querySelectorAll('object[type="internal/link"]').forEach(obj => {
             const boldElement = obj.querySelector('b');

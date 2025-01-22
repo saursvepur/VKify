@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         VKify
 // @namespace    http://tampermonkey.net/
-// @version      1.3
+// @version      1.3.1
 // @description  Дополнительные штуки-друюки для VKify
 // @author       koke228
 // @match        *://ovk.to/*
@@ -409,7 +409,7 @@ content: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAZAAAAGQCAIAAAAP3aGb
     document.head.appendChild(vk2012style);
     if (flatplayerbtns == 'true') {
     document.head.appendChild(vk2012flat_btns);
-    }
+    }}
     if (adm_ava_repl == 'true') {
         switch(String(adm_ava)) {
             case "1":
@@ -419,7 +419,6 @@ content: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAZAAAAGQCAIAAAAP3aGb
                 document.head.appendChild(admava2);
                 break;
         }
-    }
     var copydate = '2006-2012';
         switch(String(vk2012_header_type)){
             case "1":
@@ -969,6 +968,7 @@ u(".ovk-diag-body .attachment_selector").on("click", ".album-photo", async (ev) 
             });
         }
         function toggleMusic() {
+        if (enable_vk2012 == 'true') {
             const headerMusicBtn = document.querySelector('.headerMusicBtn');
 
             if (headerMusicBtn) {
@@ -999,6 +999,7 @@ u(".ovk-diag-body .attachment_selector").on("click", ".album-photo", async (ev) 
                 }, 50);
             }
         toggleMusic();
+        }
     if (window.location.pathname.endsWith('/settings') && window.location.search === '?vkify') {
         const vkify_settings = `
             <div id="wrapH">

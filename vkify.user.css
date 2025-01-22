@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           VKify
 @namespace      https://github.com/openstyles/stylus
-@version        1.1
+@version        1.2
 @description    sosiski
 @author         koke228
 @homepageURL    https://github.com/koke228666/VKify
@@ -290,6 +290,7 @@ body.scrolled .toTop:hover,
 
 .page_header #search_box input[type="search"] {
   width: 175px;
+  padding-left: 20px !important;
 }
 
 .header_navigation #search_box {
@@ -422,5 +423,14 @@ img[src*="/assets/packages/static/openvk/img/oxygen-icons/16x16/actions/insert-l
 }
 .cl_avatar img[style*="width: 70px; max-height: 70px;"] {
   width: unset !important;
+}
+.friendsAudiosList .elem img {
+  width: 30px;
+  height: 30px !important;
+  min-width: 30px;
+}
+
+img[src*="/assets/packages/static/openvk/img/oxygen-icons/16x16/mimetypes/application-octet-stream.png"] {
+	content: url("data:image/gif;base64,R0lGODlhEAAQANUzAP///5KYmPDx8fb39+nr6/r6+rrbhra3t/39/T+KJDB5FjY3OOLl5WltbrGysiFnCPP09E6bMuXo6DiBHZqam2xvcMzMzezu7qyurlxfYClwD2RnaISKikaSK93txMfKynZ6e+Xm5mlsbXyCgqqqq7q9vsjLy4qQkD4/QE1PUFVXWObo6HR3eGhpas7Qz3+Cg291dXh8fUVHSAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAEAADMALAAAAAAQABAAAAaRwJlwSCwKA8hkkjPirIYBgHQ6BX1eoaMUwe0iYIRSTHgCFM7oc2PdELIAg7h8DhAJKwAI5MDvHyAAFUIbAAKGh4gAG0IZABcXDpEOLhGVABlCKgAEnJ0EHR4dACRCKQASEhgYJgmtBq0JQjIADLW1Ewa5uRNCKFRSCsEGwQpCC8fILRQUGgYaFhZGRQ/U0tZEQQA7");
 }
 }

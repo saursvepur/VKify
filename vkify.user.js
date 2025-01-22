@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         VKify
 // @namespace    http://tampermonkey.net/
-// @version      1.3.1
+// @version      1.3.2
 // @description  Дополнительные штуки-друюки для VKify
 // @author       koke228
 // @match        *://ovk.to/*
@@ -409,16 +409,7 @@ content: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAZAAAAGQCAIAAAAP3aGb
     document.head.appendChild(vk2012style);
     if (flatplayerbtns == 'true') {
     document.head.appendChild(vk2012flat_btns);
-    }}
-    if (adm_ava_repl == 'true') {
-        switch(String(adm_ava)) {
-            case "1":
-                document.head.appendChild(admava1);
-                break;
-            case "2":
-                document.head.appendChild(admava2);
-                break;
-        }
+    }
     var copydate = '2006-2012';
         switch(String(vk2012_header_type)){
             case "1":
@@ -452,6 +443,16 @@ content: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAZAAAAGQCAIAAAAP3aGb
                 document.head.appendChild(vk2012header_custom);
                 break;
     }
+    }
+    if (adm_ava_repl == 'true') {
+        switch(String(adm_ava)) {
+            case "1":
+                document.head.appendChild(admava1);
+                break;
+            case "2":
+                document.head.appendChild(admava2);
+                break;
+        }
     }
     window.addEventListener('DOMContentLoaded', () => {
     const vkfavicon = {

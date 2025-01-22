@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         VKify
 // @namespace    http://tampermonkey.net/
-// @version      1.2
+// @version      1.2.1
 // @description  Дополнительные штуки-друюки для VKify
 // @author       koke228
 // @match        *://ovk.to/*
@@ -499,18 +499,23 @@ u(document).on("click", "#attachpopup", async (e) => {
         \`,
         buttons: [tr('send'), tr('close')],
         callbacks: [
-    () => {
-        if (window.phid !== null) {
-            window.OVKAPI.call("messages.send", {"attachment": "photo"+window.phid, "peer_id": ${peerid}})
-            location.reload()
-        } else {
-            alert('да ты дурак выбери фото');
-        }
-    },
-    () => {
-        msg.close();
-    }
-]
+            async () => {
+                if (window.phid !== null) {
+                    try {
+                        await window.OVKAPI.call("messages.send", {"attachment": "photo"+window.phid, "peer_id": ${peerid}});
+                        location.reload();
+                    } catch (error) {
+                        console.error("attachment sending err:", error);
+                        alert("чота фотка не отправляется, проверьте консоль.");
+                    }
+                } else {
+                    alert('да ты дурак выбери фото');
+                }
+            },
+            () => {
+                msg.close();
+            }
+        ]
     })
 
     msg.getNode().attr('style', 'width: 630px;')

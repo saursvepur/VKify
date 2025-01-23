@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         VKify
 // @namespace    http://tampermonkey.net/
-// @version      1.3.3
+// @version      1.3.4
 // @description  Дополнительные штуки-друюки для VKify
 // @author       koke228
 // @match        *://ovk.to/*
@@ -983,7 +983,6 @@ u(".ovk-diag-body .attachment_selector").on("click", ".album-photo", async (ev) 
                     }
                 });
             }
-        }
 
             if (window.player && window.player.audioPlayer) {
                 const headerMusicBtn = document.querySelector('.headerMusicBtn');
@@ -999,8 +998,9 @@ u(".ovk-diag-body .attachment_selector").on("click", ".album-photo", async (ev) 
                     }
                 }, 50);
             }
-        toggleMusic();
         }
+        }
+        toggleMusic();
     if (window.location.pathname.endsWith('/settings') && window.location.search === '?vkify') {
         const vkify_settings = `
             <div id="wrapH">

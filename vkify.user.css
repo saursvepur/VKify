@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           VKify
 @namespace      https://github.com/openstyles/stylus
-@version        1.2
+@version        1.3
 @description    sosiski
 @author         koke228
 @homepageURL    https://github.com/koke228666/VKify
@@ -91,7 +91,7 @@ img.name-checkmark {
 
 .bigPlayer .slider,
 .audioEmbed .track .slider {
-	/* width: 0px; */
+	width: 0px !important;
 	height: 4px;
 	background: #5C7999;
 	position: absolute;

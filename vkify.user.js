@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         VKify
 // @namespace    http://tampermonkey.net/
-// @version      1.3.4
+// @version      1.3.5
 // @description  Дополнительные штуки-друюки для VKify
 // @author       koke228
 // @match        *://ovk.to/*
@@ -455,6 +455,54 @@ content: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAZAAAAGQCAIAAAAP3aGb
         }
     }
     window.addEventListener('DOMContentLoaded', () => {
+    const originalInitEvents = window.player.initEvents;
+    window.player.initEvents = function() {
+        originalInitEvents.call(this);
+        this.audioPlayer.ontimeupdate = () => {
+            const current_track = this.currentTrack;
+            if (!current_track) {
+                return;
+            }
+            /* я не умею считать так что пусть будет пиксель пёрфект) */
+            const time = this.audioPlayer.currentTime;
+            const ps = ((time * 104) / current_track.length).toFixed(3);
+            this.uiPlayer.find(".time").html(fmtTime(time));
+            this.__updateTime(time);
+
+            if (ps <= 104) {
+                this.uiPlayer.find(".track .selectableTrack .slider").attr('style', `padding-left:${ps}%`);
+
+                if (this.linkedInlinePlayer) {
+                    this.linkedInlinePlayer.find(".subTracks .lengthTrackWrapper .slider").attr('style', `padding-left:${ps}%`);
+                    this.linkedInlinePlayer.find('.mini_timer .nobold').html(fmtTime(time));
+                }
+
+                if (this.ajaxPlayer) {
+                    this.ajaxPlayer.find('#aj_player_track_length .slider').attr('style', `padding-left:${ps}%`);
+                    this.ajaxPlayer.find('#aj_player_track_name #aj_time').html(fmtTime(time));
+                }
+            }
+        };
+        this.audioPlayer.onvolumechange = () => {
+            const volume = this.audioPlayer.volume;
+            const ps = Math.ceil((volume * 132) / 1);
+
+            if (ps <= 132) {
+                this.uiPlayer.find(".volumePanel .selectableTrack .slider").attr('style', `padding-left:${ps}%`);
+
+                if (this.linkedInlinePlayer) {
+                    this.linkedInlinePlayer.find(".subTracks .volumeTrackWrapper .slider").attr('style', `padding-left:${ps}%`);
+                }
+
+                if (this.ajaxPlayer) {
+                    this.ajaxPlayer.find('#aj_player_volume .slider').attr('style', `padding-left:${ps}%`);
+                }
+            }
+
+            localStorage.setItem('audio.volume', volume);
+        };
+    };
+    window.player.initEvents();
     const vkfavicon = {
         1: "data:image/x-icon;base64,AAABAAEAEBAAAAEAGABoAwAAFgAAACgAAAAQAAAAIAAAAAEAGAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACskXaEXDOHXzaIYDeIYDeIYDeIYDeIYDeIYDeIYDeIYDeIYDeIYDeIYDeEXTKefV6AVyx5TiB5TiB5TiB5TiB5TiB5TiB5TiB5TiB5TiB5TiB5TiB5TiB5TiB4TiB8VCeIXzh5TiB5TiB5TiB5TiB5TiB6TyB5TyF5TiF5TiB5TiB5TiB5TiB5TiB5TiCCWzCIYTh6UCF7UCF7UCJ6UCKbfFmcfFmbfFmcfFmcfFmMZj16UCJ7UCJ7UCF6UCGDWy+KYjl+UyV+VCV/VCV+UyX////////////////////////HtKB/VCV+VCV+VCWGXTGMZTuCVymBVymCVymCVyn////////g1crBq5Tw6+X///////+hgV6CVyiCVymIXzSPZz6GXC2GWiyFWiyFWi3////////DrZaGWyykg2L////////DrZaFWy2GWi2MYzeRaUCKYDGJXjCKXjCJXjD////////49fLx6+b49fL///////+ZckqJXjCJXjCPZjqUbEOPZDaOYzWOYzWOYzX///////////////////////+5noGPYzWOYzWPYzWUaT+Xb0aVaTyTZzqTaDqTaDr////////Xx7a8oYX59vP////JtJ2TaDqUZzqUaDuXbkKZcUmYbD+Xaz2Xaz2Yaz7////////MtZ+edEny7ef////l2s+Yaz6Xaz2Xaz2ackabdEqccEKabkCabkCbbUD////////////////////////g0sSbbkGabkCbbkKddEmedk6hckaecUSeckSeckTn3NHn3NHn3NHn3NHn3NHbyrmke1GeckSeckSfckWheE6gdk6hdUifc0Wgc0agc0agc0agc0afc0agc0agc0afc0agc0agc0afc0afdEakfFCddEqjeEmjeUmjeEmkeEmkeUqjeEqkeUujeUqjeUqjeUqjeUqjeUqjeUqkekucc0S8o4ufd06jfFKjfVOjfVOjfVOjfVOjfVOjfVOjfVOjfVOjfVOjfVOjfVOgd020mHsAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
         2: "data:image/x-icon;base64,AAABAAEAEBAAAAEAGABoAwAAFgAAACgAAAAQAAAAIAAAAAEAGAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACrglyYZzuYZzuYZzuYZzuYZzuYZzuYZzuYZzuYZzuYZzuYZzuYZzuYZzuYZzurglyYZzurglyrglyrglyrglyrglyrglyrglyrglyrglyrglyrglyrglyrglyrglyYZzuYZzurglyzj22zj22zj22zj22zj22zj22zj22zj22zj22zj22zj22zj22rglyYZzuYZzurglyzj22zj22zj22fckmfckmfckmfckmidk2qgVyzj22zj22zj22rglyYZzuYZzurglyzj22zj22zj23////////////////y7OfMtJ6uh2Ozj22zj22rglyYZzuYZzurglyzj22zj22zj23////////Ww7Hcy7v59/T////Bo4ezj22zj22rglyYZzuYZzurglyzj22zj22zj23///////+qgVyqgVzNtZ/////UwK2zj22zj22rglyYZzuYZzurglyzj22zj22zj23////////PuKPNtqD59vP59/TCpYqzj22zj22rglyYZzuYZzurglyzj22zj22zj23////////r4dj18Ov59vPBpIizj22zj22zj22rglyYZzuYZzurglyzj22zj22zj23///////+qgVyshWD////y7Oezj22zj22zj22rglyYZzuYZzurglyzj22zj22zj23////////MtJ7f0ML////59/Szj22zj22zj22rglyYZzuYZzurglyzj22zj22zj23////////////////18OzRvKezj22zj22zj22rglyYZzuYZzurglyzj22zj22zj22zj22zj22zj22zj22zj22zj22zj22zj22zj22rglyYZzuYZzurglyzj22zj22zj22zj22zj22zj22zj22zj22zj22zj22zj22zj22rglyYZzuYZzu8nH68nH68nH68nH68nH68nH68nH68nH68nH68nH68nH68nH68nH68nH6YZzurglyYZzuYZzuYZzuYZzuYZzuYZzuYZzuYZzuYZzuYZzuYZzuYZzuYZzuYZzurglwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",

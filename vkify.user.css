@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           VKify
 @namespace      https://github.com/openstyles/stylus
-@version        1.3
+@version        1.4
 @description    sosiski
 @author         koke228
 @homepageURL    https://github.com/koke228666/VKify
@@ -432,5 +432,63 @@ img[src*="/assets/packages/static/openvk/img/oxygen-icons/16x16/actions/insert-l
 
 img[src*="/assets/packages/static/openvk/img/oxygen-icons/16x16/mimetypes/application-octet-stream.png"] {
 	content: url("data:image/gif;base64,R0lGODlhEAAQANUzAP///5KYmPDx8fb39+nr6/r6+rrbhra3t/39/T+KJDB5FjY3OOLl5WltbrGysiFnCPP09E6bMuXo6DiBHZqam2xvcMzMzezu7qyurlxfYClwD2RnaISKikaSK93txMfKynZ6e+Xm5mlsbXyCgqqqq7q9vsjLy4qQkD4/QE1PUFVXWObo6HR3eGhpas7Qz3+Cg291dXh8fUVHSAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAEAADMALAAAAAAQABAAAAaRwJlwSCwKA8hkkjPirIYBgHQ6BX1eoaMUwe0iYIRSTHgCFM7oc2PdELIAg7h8DhAJKwAI5MDvHyAAFUIbAAKGh4gAG0IZABcXDpEOLhGVABlCKgAEnJ0EHR4dACRCKQASEhgYJgmtBq0JQjIADLW1Ewa5uRNCKFRSCsEGwQpCC8fILRQUGgYaFhZGRQ/U0tZEQQA7");
+}
+.tippy-content .bigPlayer {
+  text-transform: none !important;
+  font-weight: normal;
+  font-size: 11px !important;
+  margin-left: -9px;
+  margin-top: 0px;
+  margin-right: 0px;
+  width: 520px;
+  background-color: unset !important;
+  height: 46px;
+  border: unset !important;
+  box-shadow: unset !important;
+}
+ .tippy-content .bigPlayer .tip_result {
+    width: max-content;
+    height: 11px;
+    padding: 4px;
+    top: -4px;
+    background: #f7f7f7;
+    border: 1px solid #d8d8d8;
+    position: absolute;
+    z-index: 10;
+    transition: all .1s ease-out;
+    user-select: none;
+    transform: translate(-20%, -15%);
+}
+ .tippy-content .bigPlayer .tip_result {
+    width: max-content;
+    height: 11px;
+    padding: 4px;
+    top: -4px;
+    background: #f7f7f7;
+    border: 1px solid #d8d8d8;
+    position: absolute;
+    z-index: 10;
+    transition: all .1s ease-out;
+    user-select: none;
+    transform: translate(-20%, -15%);
+}
+ .tippy-content .bigPlayer .trackPanel {
+  position: relative;
+  margin-left: 15px;
+  display: flex;
+  flex-direction: column;
+  width: 273px;
+}
+.tippy-box[data-theme~="musicpopup"] {
+  padding-top: 0px !important;
+  padding-bottom: 0px !important;
+  border-radius: 0 !important;
+  border: 1px solid #878787;
+  background-color: #F0F1F3;
+  box-shadow: 0px 2px 6px -5px rgba(0, 0, 0, 0.8);
+  color: #000;
+}
+.tippy-box[data-theme~="musicpopup"] .tippy-arrow {
+ color: #f7f7f7;
 }
 }

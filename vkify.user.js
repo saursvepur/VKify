@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         VKify
 // @namespace    http://tampermonkey.net/
-// @version      1.4.2
+// @version      1.5
 // @description  Дополнительные штуки-друюки для VKify
 // @author       koke228
 // @match        *://ovk.to/*
@@ -22,6 +22,60 @@
         localStorage.setItem('ux.disable_ajax_routing', 1);
         location.reload();
     } я надеюсь, что выключать ajax больше не понадобится */
+    const localloc = localStorage.getItem('localizationdata');
+const ru_RU = `{
+    "vknaming": "ВКонтакте",
+    "selectphsmall": "(подписью будет то, что вы указали в поле для сообщения)",
+    "headmusic": "музыка",
+    "headpeople": "люди",
+    "headgroups": "сообщества",
+    "headgames": "игры",
+    "headsupport": "помощь",
+    "headlogout": "выйти",
+    "footerabout": "о сайте",
+    "footersupport": "техподдержка",
+    "footerblog": "блог",
+    "footerterms": "правила",
+    "vkifysettings": "Настройки VKify",
+    "vkifyfootersett": "Кнопка VKify в футере",
+    "vkifyfootersettdesc": " - вы сможете всегда открыть эту страницу через <a href=\\"/settings?vkify\\">эту ссылку</a>",
+    "vkifyrealvkify": "Абсолютная ВКфикация",
+    "vkifyrealvkifydesc": " - пытаемся заменить абсолютно все упоминания OpenVK со страницы на \\"ВКонтакте\\" (<b style=\\"color: red;\\">ОСТОРОЖНО! Может заменить то, чего не стоило бы</b>, однако, выглядит прикольно)",
+    "vkifyvk2012": "Имитация ВК 2012 вместо 2007",
+    "vkifysupportedlinks": "*поддерживаются любые ссылки на картинки (.png, .gif, .jpg, etc)",
+    "vkifyflatplayerbtns": "Использовать более плоские кнопки в плеере",
+    "vkifyfartscroll": "Fartscroll",
+    "vkifyfartscrolldesc": " - удалённая фича OpenVK",
+    "vkifyenablevkemoji": "Использовать смайлики из ВКонтакте",
+    "vkifyenablevkemojidesc": " - прекрасно и неповторимо",
+    "vkifyproxyvkemoji": "Проксировать смайлики",
+    "vkifyproxyvkemojidesc": " - я не знаю зачем, но они будут сохраняться локально на сервере, да и шоб вк не видел ваш айпишник",
+    "vkifyadmavarepl": "Заменять аватарку <a href=\\"/id100\\">Администрации</a>",
+    "vkifygifautoplay": "Автовоспроизведение GIF",
+    "vkifyfaviconrepl": "Заменять favicon",
+    "vkifylocalization": "JSON локализация VKify"
+}`;
+    function mergeLocalization(mainLoc, defaultLoc) {
+        const result = { ...defaultLoc };
+        for (const key in mainLoc) {
+            if (mainLoc.hasOwnProperty(key)) {
+                result[key] = mainLoc[key];
+            }
+        }
+        return result;
+    }
+	if (localloc) {
+		try {
+			var defaultlocalization = JSON.parse(ru_RU);
+            var localization = mergeLocalization(JSON.parse(localloc), defaultlocalization);
+		} catch (error) {
+			console.error('vkify localization parsing error: ', error);
+            var localization = JSON.parse(ru_RU);
+		}
+	} else {
+		console.warn('vkify localization not found, using standard RU...');
+        var localization = JSON.parse(ru_RU);
+	}
     const firstload = localStorage.getItem('firstload');
     const enable_setts = localStorage.getItem('enable_vkify_settings');
     const enable_vk2012 = localStorage.getItem('vk2012');
@@ -457,7 +511,7 @@ content: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAZAAAAGQCAIAAAAP3aGb
     window.addEventListener('DOMContentLoaded', () => {
     const ovkuserid = window.openvk.current_id;
     const csrfToken = document.querySelector('meta[name="csrf"]').getAttribute('value');
-    document.title = document.title.replace("OpenVK", "ВКонтакте");
+    document.title = document.title.replace("OpenVK", localization.vknaming);
     try {
         const audioData = localStorage.getItem("audio.lastDump");
         const audioDataJSON = JSON.parse(audioData);
@@ -580,7 +634,7 @@ u(document).on("click", "#attachpopup", async (e) => {
     const form = u(e.target).closest('form')
     const club = Number(e.currentTarget.dataset.club ?? 0)
     const msg = new CMessageBox({
-        title: tr('select_photo')+'<text style="font-size: 10px;"> (подписью будет то, что вы указали в поле для сообщения)</text>',
+        title: \`${tr('select_photo')}<text style="font-size: 10px;"> ${localization.selectphsmall}</text>\`,
         body: \`
         <div class='attachment_selector'>
             <div class="topGrayBlock display_flex_row">
@@ -774,7 +828,7 @@ u(".ovk-diag-body .attachment_selector").on("click", ".album-photo", async (ev) 
    }
     if (enable_vk2012 == 'true') {
         var hdraudiobtn = `<div class="link" id="headerMusicLinkDiv" style="margin-right: 28px;">
-                   <div class="headerMusicBtn paused" id="headerMusicBtn"></div><a href="${lastmuslink}" style="color: #FFFFFF;">музыка</a></div>`
+                   <div class="headerMusicBtn paused" id="headerMusicBtn"></div><a href="${lastmuslink}" style="color: #FFFFFF;">${localization.headmusic}</a></div>`
     } else {
         var hdraudiobtn = ``
     }
@@ -837,44 +891,45 @@ u(".ovk-diag-body .attachment_selector").on("click", ".album-photo", async (ev) 
         parseGifts();
         const page_header = document.querySelector('.page_header');
         if (page_header) {
-            const headerData = `<div class="page_header">                <a href="/" class="home_button" title="ВКонтакте"></a>
+            const headerData = `<div class="page_header">                <a href="/" class="home_button" title="${localization.vknaming}"></a>
                 <div class="header_navigation">
 <div class="link header_divider_stick" id="search_box">
                                 <div id="search_box_fr">
                                     <form id="search_form" action="/search" method="get">
                                         <div id="search_and_one_more_wrapper">
-                                            <input autocomplete="off" type="search" maxlength="79" name="q" placeholder="Поиск" title="Поиск [Alt+Shift+F]" accesskey="f">
+                                            <input autocomplete="off" type="search" maxlength="79" name="q" placeholder="${tr("header_search")}" title="${tr("header_search")} [Alt+Shift+F]" accesskey="f">
                                             <select name="section">
-                                                <option value="users">по пользователям</option>
-                                                <option value="groups">по группам</option>
-                                                <option value="posts">по записям</option>
-                                                <option value="videos">по видео</option>
-                                                <option value="apps">по приложениям</option>
-                                                <option value="audios">по аудиозаписям</option>
-                                                <option value="audios_playlists">по плейлистам</option>
+                                                <option value="users">${tr("s_by_people")}</option>
+                                                <option value="groups">${tr("s_by_groups")}</option>
+                                                <option value="posts">${tr("s_by_posts")}</option>
+                                                <option value="videos">${tr("s_by_videos")}</option>
+                                                <option value="apps">${tr("s_by_apps")}</option>
+                                                <option value="audios">${tr("s_by_audios")}</option>
+                                                <option value="audios_playlists">${tr("s_by_audios_playlists")}</option>
+												<option value="docs">${tr("s_by_docs")}</option>
                                             </select>
                                         </div>
                                         <button class="search_box_button">
-                                            <span>Поиск</span>
+                                            <span>${tr("header_search")}</span>
                                         </button>
                                     </form>
                                 </div>
                                 <div id="searchBoxFastTips"></div>
                             </div>
                             <div class="link">
-                                <a href="/search?q=&section=users">люди</a>
+                                <a href="/search?q=&section=users">${localization.headpeople}</a>
                             </div><div class="link">
-                                <a href="/search?section=groups">сообщества</a>
+                                <a href="/search?section=groups">${localization.headgroups}</a>
                             </div>
                             <div class="link">
-                                <a href="/apps?act=list">игры </a>
+                                <a href="/apps?act=list">${localization.headgames} </a>
                             </div>
                             ${hdraudiobtn}
                             <div class="link">
-                                <a href="/support">помощь </a>
+                                <a href="/support">${localization.headsupport} </a>
                             </div>
                             <div class="link">
-                                <a href="/logout?hash=${encodeURIComponent(csrfToken)}">выйти</a>
+                                <a href="/logout?hash=${encodeURIComponent(csrfToken)}">${localization.headlogout}</a>
                             </div>
                 </div></div>`;
         page_header.innerHTML = headerData;
@@ -981,14 +1036,14 @@ u(".ovk-diag-body .attachment_selector").on("click", ".album-photo", async (ev) 
   //* замена футера *//
     const vkfooter = `
             <div class="navigation_footer">
-                <a href="/about" class="link">о сайте</a>
-                <a href="/support?act=new" class="link">техподдержка</a>
-                <a href="/blog" class="link">блог</a>
-                <a href="/terms" target="_blank" class="link">правила</a>
+                <a href="/about" class="link">${localization.footerabout}</a>
+                <a href="/support?act=new" class="link">${localization.footersupport}</a>
+                <a href="/blog" class="link">${localization.footerblog}</a>
+                <a href="/terms" target="_blank" class="link">${localization.footerterms}</a>
                 `+vkifysett+`
             </div>
             <p>
-                    <a href="/" class="vkify-footer-lang">ВКонтакте</a> © `+copydate+`
+                    <a href="/" class="vkify-footer-lang">${localization.vknaming}</a> © `+copydate+`
                     <a href="/language?lg=ru&hash=${encodeURIComponent(csrfToken)}&jReturnTo=${encodeURI(window.location.pathname)}" rel="nofollow" title="Русский" class="vkify-footer-lang">
                         Русский
                     </a>
@@ -1095,7 +1150,7 @@ u(".ovk-diag-body .attachment_selector").on("click", ".album-photo", async (ev) 
     }
         vkifyEmoji();
         playgifs();
-        document.title = document.title.replace("OpenVK", "ВКонтакте");
+        document.title = document.title.replace("OpenVK", localization.vknaming);
         });
 
         if (footer) {
@@ -1145,7 +1200,7 @@ u(".ovk-diag-body .attachment_selector").on("click", ".album-photo", async (ev) 
         const vkify_settings = `
             <div id="wrapH">
                 <div id="wrapHI">
-                    <div class="page_yellowheader">Настройки VKify</div>
+                    <div class="page_yellowheader">${localization.vkifysettings}</div>
                 </div>
             </div>
             <div class="wrap2">
@@ -1154,15 +1209,15 @@ u(".ovk-diag-body .attachment_selector").on("click", ".album-photo", async (ev) 
                         <div class="page_content">
                             <div class="page_content">
 						  <input type="checkbox" id="vkify_settings" checked="">
-						  <label class="nobold" for="vkify_settings">Кнопка VKify в футере</label>
-						  <span> - вы сможете всегда открыть эту страницу через <a href="/settings?vkify">эту ссылку</a></span>
+						  <label class="nobold" for="vkify_settings">${localization.vkifyfootersett}</label>
+						  <span>${localization.vkifyfootersettdesc}</span>
 						<br><br>
 						  <input type="checkbox" checked="" id="realvkify">
-						  <label class="nobold" for="realvkify">Абсолютная ВКфикация</label>
-						  <span> - пытаемся заменить абсолютно все упоминания OpenVK со страницы на "ВКонтакте" (<b style="color: red;">ОСТОРОЖНО! Может заменить то, чего не стоило бы</b>, однако, выглядит прикольно)</span>
+						  <label class="nobold" for="realvkify">${localization.vkifyrealvkify}</label>
+						  <span>${localization.vkifyrealvkifydesc}</span>
 						<br><br>
 						  <input type="checkbox" checked="" id="vk2012">
-						  <label for="vk2012" class="nobold">Имитация ВК 2012 вместо 2007</label>
+						  <label for="vk2012" class="nobold">${localization.vkifyvk2012}</label>
 						<br>
 						  <input name="vk2012head" type="radio" checked="" style="margin-left: 25px;" id="vk2012head2" value="1">
                           <img alt="" src="data:image/png;base64,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" />
@@ -1188,25 +1243,25 @@ u(".ovk-diag-body .attachment_selector").on("click", ".album-photo", async (ev) 
 						  <input name="vk2012head" type="radio" id="vk2012head2" value="custom" style="margin-left: 25px;">
                           <img alt="" src="data:image/png;base64,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" />
                           <input type="text" id="customheader" value="" style="height: unset !important;width: 60px !important;margin-left: -95px;transform: translateY(-16px);" placeholder="https://...">
-                          <label class="nobold" style="margin-left: 25px;">*поддерживаются любые ссылки на картинки (.png, .gif, .jpg, etc)</label>
+                          <label class="nobold" style="margin-left: 25px;">${localization.vkifysupportedlinks}</label>
                           <br><br>
 						  <input type="checkbox" checked="" id="flatplayerbtns">
-						  <label for="flatplayerbtns" class="nobold">Использовать более плоские кнопки в плеере</label>
+						  <label for="flatplayerbtns" class="nobold">${localization.vkifyflatplayerbtns}</label>
 						<br><br>
 						  <input type="checkbox" checked="" id="enablefartscroll">
-						  <label class="nobold" for="enablefartscroll">Fartscroll</label>
-						  <span> - удалённая фича OpenVK</span>
+						  <label class="nobold" for="enablefartscroll">${localization.vkifyfartscroll}</label>
+						  <span>${localization.vkifyfartscrolldesc}</span>
 						<br><br>
 						  <input type="checkbox" checked="" id="enablevkemoji">
-						  <label class="nobold" for="enablevkemoji">Использовать смайлики из ВКонтакте</label>
-						  <span> - прекрасно и неповторимо</span>
+						  <label class="nobold" for="enablevkemoji">${localization.vkifyenablevkemoji}</label>
+						  <span>${localization.vkifyenablevkemojidesc}</span>
 						  <input type="checkbox" checked="" style="margin-left: 25px;" id="proxyvkemoji">
-						  <label class="nobold" for="proxyvkemoji">Проксировать смайлики</label>
-						  <span> - я не знаю зачем, но они будут сохраняться локально на сервере, да и шоб вк не видел ваш айпишник</span>
+						  <label class="nobold" for="proxyvkemoji">${localization.vkifyproxyvkemoji}</label>
+						  <span>${localization.vkifyproxyvkemojidesc}</span>
                           <br>
                           <br>
 						  <input type="checkbox" id="adm_ava_repl" checked="">
-						  <label class="nobold" for="adm_ava_repl">Заменять аватарку <a href="/id100">Администрации</a></label>
+						  <label class="nobold" for="adm_ava_repl">${localization.vkifyadmavarepl}</label>
 						  <br>
 						  <input name="adm_ava" type="radio" id="adm_ava" value="1" style="margin-left: 25px;">
                           <img style="width: 75px;" alt="" src="data:image/png;base64,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" />
@@ -1214,10 +1269,10 @@ u(".ovk-diag-body .attachment_selector").on("click", ".album-photo", async (ev) 
                           <img style="width: 75px;" alt="" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAIAAAD/gAIDAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAABNXSURBVHhe7VwJcF3Veb7n3O2tepKszZaMha0YjB1jG9sQYMAQDC1JWwoNE2inSWgGmrbTMJ22ybQhLXRa2mnSpDMtIaE0Mw2lrA4JBBwgODYGbLyv2JI3tNharOVJb7/L6fef+2TL2qwnXS1m9Onq6b5zz733nO/867nnit31reeVWYwNPP93FmPALFkFYJasAjBLVgGYJasAzJJVAGbJKgCzZBWAWbIKwCxZBWCWrAIwS1YBmCWrAMySVQB8JIv1b59Y+E6WwsSM4Esw4TXFx/b4RxazFea4zHW4yJdMK4gjIgyUOfmiCcM3soTQchbLZN1M1snaruNOD2W4qyMUNCBpOYmcm7SVlMNR4gt8mVZmWdsWilNXEa0siahc6U5Ypzv7zsQzjGshQ1NJD7z24pM0o/+rb4D8WI6bztkqc6uKApUl4TlRQ9P0TM6J96WbOvvaknZQ1wPaOZUcTxvGTxbdiimqEAmLra6NfPGOFbVzy4KGJhh3bLs3kTnZ2vnhwebNB5q6027ENDiHOgjm6nTuxFQDCuZCJxh+IMEsleXCtq6aH1xzVc3ShVU15SWRcABUMaa4roLGdPYmjjR2/HJbw85TXdGAoaIVdLoDLS0IE5Is3DTr8CvKjG8+sL4qFlYUVxaT0ZIj6LpCtLT3vLn96IZtjbarBAxDUWw0kQvZ4PHKlyRBg6KnspapKTcvq1h3Td3iBXNjQUPeV0DQzokQAMsFWnszzotv731+84lgEAKGZqj5w2OGeuVNX8jvFgwBIYpn7QduX7qibt45ptAXRq3FL3Z5cSS04or5K+vKz3Z2n2ztMdAdxrnAwHr1xwNbUZPZXIDl7lyz4E/vWnPHDcsWlMcCOgaJlIsMOw3DebpQjpsFNX3ZornJnq79LXET6srIXg/k9KKYCFlogaq51n23LSuLRWRDJVPUXnzQJv+QNlQUR9YuvSyiiz317YIZXLVJh4bHQHE7X8fbw12SOfhb+/Nr5v/x3dfdfu3i8uKoJo/D9fVzxGl3wOUlfXSyxnlJafitbcc1bgjuotqAWhfHhLwhV1zIsqF5F8kzRHsDNgmqEA2a996++ht/cENAy2UcSGX+oOQGH9TPfsb7NzIqXv9JWtMO783k1i8t/+7XPvvQPTddUV2hUjWcRNTIUfG28zfuhyyXR+ZXli6fF2hL9EK02MB7jQFjqjQSuHBtx01mbewPbl4e54qxI7jI3bi89pEv3VJlBLKWC0WAoSVPDyJckbLtlGX3WZa3JS0rYzk5x7VckXNERya3sJT/0x9e//B96668rNKAiSfCcdmBtzi3PxT5Q6bKa+eVtvUmevuSjl2Yn5mQGuL+iGVWXV62qLosXzYaUF3lzKoqKa6dX7Lno5NtiaymiiKTVYbN6uLwgjmRRZWxK+bF6iqLFlUUVZcE50QDxSE9rCn4/Pza2od+59rFCyqYilAEP3ZGuEdPtgcCpqGjZLBRHwW7Pvr4/Ya2iKpauRzjTNOkHnsiPiomEjqgbWRBfmN5xdfvX0eO+uKAODC4SJj4M2d72rviRUXhkGmGTARjHAGayrnCVa/VLjyecIXr2jT+PBQ0OIOVpGD32MdtGYfva2h8a0fD41/7XM2cmAxFZTx3MeSE8vgPf/b8rqbygEF2TgjDMEKhEIYA+/lKI2BCagjGwrry/tG2pvZufCH3hu7JAyOATAfnHL2aV1a8YvGChVVlVSXRohD40k1d11QVXl2XG/TF1DREG5FQMBIyYbQRAVDU4bgbtx5+6D/efuoXhysjYdDsULm0byOAjoB1uR+PJ3Y2tMZ0SBOsFkwDy1pWPNGXy+Xk8dEwfrKki4GRZJ1p990dR1HC0SKI9WjjM0ZFGRZEsaoITdUeuHfdrYtLP7u88k/uv6koFJBCTj8jAU1Fw+COsL/3o1Pb21I6CVJ/7EJhm5NIJFLpNITL8wPDYkKShQZCo6IB/efbTjQ0d6BA8oSPUfgaHzACJLPQyYPHmzfv+Kj+THzF4uqFFSUB6je6N0pHPJEEWGci/ezGXTXBgGzqQFIo7EplsvEE7IozEl8TIgtKgQ8dwbGtPbNxL26mUpdQ6N3MX8rQYfh6rb7p7Mtbjh/pTMciyAcGYtjbUfSOIYVIIp94+Zfb3zzWHTMpdscwezXOARzZSNR6+9LpdL7oQkzEGwIy2FOYofIjrX1RzV6ysApqiD552YwMZHwBxprUEP1ZUlu1dtl8J96xbs2SGEzm+VsMFgean6GNYjSH8de37HzkJ9tqiiMwFfkaQ+DJlGXZtuuquq6QeT0/BhMk6zygDu8fa68pCSyqrpA5KpQD+YcjbcmIjRsXRNhQVy+vK4vo5FwhNMNDhvTUfWEp7LXNe/7q6S0lRRHEGfnjo4Axx3Fg8uGd4abzhRNUw4FAu0wj9P2Xd3146CTSIMi856P8ZgqArVZDGoQXhkYfVvcA0ln8MqUnnXl6w68ffurXxZFomOjtt+ujgjgWIpFMpFKpcyGFP5JFF2MiJBARGVsPnqitjMytKqVcFdmQ71wBchQQWMH/XugFveEh4A+OHTzR8p0fv/nEO8cWFAdMHf2HWBXUIOZAJW1LVSFkqj9k4f7SM5KO20J9e8/Jq2pi1eWlg7riG+iiZF0GXZ5cANlKmiNq6eh+4fUPHnn6nSNn0/NjIQR38rTCNQlXdAViMZztmxoC0hkLnfgydh08JUfZt/nvMYBCpIzgR093PP3Spq88+uzf/fSAFghVRrzkQnIrdaBgyPNTqbSfZPVDBDV+rC2Zoph4XI0bJ9iRxpbH/vNnX/r2c3/7yu4+S6krpTltV6FgPV9lAsBI+CtZBFj2rOvsa4739CQp5B4T/OF0/+Hmx18/znV9cUlUNw1pGFxe+IzoSPCLLKlzTEnZDrK4W5eU37t2nkV+Z4xDitOR4eGHJl7wmy8+vzMmlJeEfnfpnL6cRSkfnUphuoz4/IFfLw0QKZlcZnVdxVd/e21FScRy4EYE3PvIASABPeKMBQPIob3vYByiCUeKRIBZjp1J2w4F4dJojwo6blCa/fb7+//5+f0hE4pTGNcXhT9kgRCwU10aeuzBO7p7e5/duLulM+lieKn7+BiRMIQwqHT5nMA9d6xaMr8iXypx+FTr87/af6YjaVM+ALqAEa9DEKJIEzevWXTbjUtfe3vn37+wszI0KB+aKPwhCyPYk7b+5p7lK5cu+ot/f/V0nxPQqaFyZmK04UXvoSS9trOs1PzK3dcitYSoRUJG1nX/7SfbGrtTMNGy4sU1GrexFaWrN/3ofdesXr7owX94rjVhwTXnD/sBv9RQSWStH/z5bV09mT/773erKWUroJUwwuho1s7argaTHFBdTVctoesklYWpEi7x6Zqib311/Xd+/MYru1qKTRnik9nygTWfDDw9OGGmqVtWbkzzlReCu4gZIYm67TgZITpsvc8xada0QKbACJC1bJAcCZk2DJ+v8ImsfmVDW+XfggCX5WStzJ3Xzn30y9f+4++v/fbdy2+oDbvWxacuhwVaULBAjg1+xlnjBVI2LW05Kz9Vc/PyxTetvOLO65fesmpBdw7Ziw/N80H9+uEPWRhG8u7eeBaYD3oiYFHMQOflJYKekhUsH/3ehK5DYcPozqVwzATJAoZ2CrmFJK8Q9F+F/uaZLvQSo2KGkHVpwEeyzknHUDEZDyZ+FV+liuAfWYhl0L98XldgT8lcITmh+RzvTET2sFmIueS3sUI+sfGyS7hl75qeOvrDm29kIVay0WnuOAJxYAGJPkX59JxLc2SX4BqplEpUOUFWAFDb4uAKIbGwyeJhc+nqPsE3srK20tqZKCsriigWGpgvHRscwYq5VVVWjH0vUKuYUxRh2QKDSqqdytp11WFcsLE1HqAFmoXJ5ujw6ekOozUERcK++bolITe99WhHynZSlosNAVQa+7TR1+E2O+M4D66/6vqrLyftkSlOcVFYF7n3GtqTuAJOHPFcHBIp3IL2nbglVpXH/ugL17W2dz752l5T1+FSx7FobST4lhuiTZls9ut3XX3L2qVNpzu6e+KCkR5BrZDESBGhKZOhjYaNKSmJLJ5fZahyDr2/CuSz4eMzXd19Qi4V8Zb1DQLKcYKq0koujvvpat1lc+PJ1GNPvrqvJRkcy1OvQuAbWYi2LcbtXOpzq2puWL6oKBqhQjmfd1lVcVC7aLuhL+h7wd0TrnO8ucdSXJUhQcoeOdX+3FsHTnVaoQDolWPkH3wjiwsIPDwQT+asrCMMlaEEfomJ3A//8q6FlWWSuvzHIEg7hXLoywXSQ3XpeZrclyWDwBg/drr9zm/+D9cNxjXL0RU3VxZSIWKqn8YqD98MvM3puYAq3KiulQb1iKGFDCNkhhQ1TIvkZcepw6RnQzZy+sP4Pun5aTWAAPODTqFjVP9IfXOTq5eF9TJTnxd25kV1Q9W0/Poin+EbWZ7L9zqMftNGO65wrXSWmo4DMC2Deyw3SeEQqggog0ejGbyh56LEtpwP9h5fZGpMeJOEUD2vR771ayD8I2uAonhCJOVIsQVLpTPDUzFOYFg8A6e0dPVsPdxSHKAXEVw5wyebMZyq+4FJGYGBsAQby6K6gkF8iL31jccSrkprXRCT+Tgew2PSyYJepLNW/ktBGE08oIUIg+0tO+pLwwEpaKjuc6AwFJNOlq6weDKLHTLUQ0BLUGmRitvem9zT0LJ1d/22g6ca23osR05nUQ1Pp5A2nifP22s60/nmofaYmZ/v9zdYHxa+rc8aCTnHrasMXXPlZXABJA/nAZpopWdv1n5j6+EfvPTB/753YuOBM5v2fbxp9/G29o6K8uLSSJBskQxmB54reeFvbNm1YX9redDn512jYNLJQi8Nxbl+xUKDtORCQWa8N2P910ubntpU7ypqVNOKVR7UmMWMA83xXfvqa2vmzJ0To8jhghPBmuhMZL/3f5uFc8Fis8nGZN+JITysb+nr6OwbdC8IC7Rp47t7Xtx9tioSNTg9SbVoTZdmCKfU5F057V+fffdkWxedOMC/yT31SH3TxsYkvd41QD0nG5NLFvqBjnZn3aOnWqVEnANFmo0dPS9sbUDALdj55JHmZihm40GVn+lzX31nn01vGXimTVZSRNZx3tp+qBKh1cBLTj4mlyypQUI1gtsPNVo2veLTD/SSHahvbEs4XNqkfnhegD5AT9TUtxw6fbqjR6ohxVDS8bGTLe2v7ThWFjKmIFwYiMlWQ/KBQV354ETXyVYo1HnkhDh8qsNETjdih5nGWGuGnW7vlN/wS74TlL+z7VCHpanwGB63U4XJJoskwRSZlM227j2ZLyKIXDbXfDYBU+W9+DAsuGLnFJ6RYRqET/pEtbm1++VNRyujUa/OVGKyyaIM2FW0mKG+sePkqY7+V3xgd7K57oRNS2hHkCyUMsFDTMwppRlUUkukfsLduHl3Q8IOyAjUxynjsWDSJUuCIRvuTjmvv3uI1pkpiFGZQ7k25SiwRPlaFwKlcZtdXxteWF1G5p1OFAdOnH5i476aIlMen2pMDVmESED/6bam7QehjDqkKxTUq4s0i54GDS9ZiGaDLH3/b64O00oYWlzb3Zd+8rlNFg9otGZkGjB1dwUlhq49sWFnfXMXbhsx9M98urYnlfPmyAcC6pbIOlC0b9x/41UL5ykIPWmxnHjm5++9eqi7PFTYeiYfMekR/Dmgfxpzuy2lvr5pycLK0mioqmJOd3vHvqZeAwcYvf9rO05vTmRt99bFJQ9/8YaVn6rhyAoZzzriuV+89y8bdtaUxhC39l9vqjF1ZAEuU3RVOdsndh1urKspXlBRvOLKmqqIkkxlmevGgtqC8uj6ZVVfvn3pb627uqrE83e8uavvRy/+6nuv7KkqCXONT9ZbG2OAb3PwYwCCT85ZFs4x6boBpvz17636zIrFULFMzkqnc1zlAXqflaY8Yb2RLcfTmS27Gn604cOPWpNVJRF6WkTBPAJ3CNc0GPgplSzEAlA3oegmU2yFvbnnVCrRW1MeK4mGgwEjAJMms2LQcDae3Lq74fvPvPPd1/Zxxkspd8TZcqaaOdMkWFMqWQQpMl5nKdeLp3LlQXbbynnL6uaXlUQyWbu9s+tQQ8uWvU3vnU5UhgNFJrm+finCidimQaY8TDVZQwG73plyEn1xO5dOurzbdSKaPjdghqGO3tL/GYPpJwuguJQpOdtJpTI28m3KrEkfp2DysyAMjnGmBRAfV3BdM2LRaCgUoeUOwp5pTAEzgizIEAkXrL8iYOlj0YipafSvBPJTWDMFM4SsPIgb4WqqGo1Gw6EQ48icZxBfM4ssDx5BZiBQFI0a9P/Jps//XYiZSFYeQqiqGolEQqEgh8mfASI2g8mCJRMuF27QNGORiCdi04sZTVYeEDGNRCwcDtF8/fSJ2KVAFiAEiZhhFEcjASSP08TXJUKWBGTKs2LhSHharNilRBbgERQwKBaDiLHJWbQ2Ei4xsvKAVnIOEYOQkYjlSycdlyZZ/TBNM1pUZOr61KjkpU0WWTHOw1LGpsCKXdpkAV4sBvtFGaVp5tlCrjkJuOTJOgcORxkOR8NhzkHgpBj+Tw5Z0EmQZBo6wv2gMSlW7BNElgfpKMNhsmM0L+YjFOX/AQHAdvTbYlzyAAAAAElFTkSuQmCC" />
 						<br><br>
 						<input type="checkbox" id="gifsautoplay" checked="">
-						<label class="nobold" for="gifsautoplay">Автовоспроизведение GIF</label>
+						<label class="nobold" for="gifsautoplay">${localization.vkifygifautoplay}</label>
 						<br><br>
 						  <input type="checkbox" checked="" id="faviconrepl">
-						  <label for="faviconrepl" class="nobold">Заменять favicon</label>
+						  <label for="faviconrepl" class="nobold">${localization.vkifyfaviconrepl}</label>
 						<br>
 						  <input name="faviconreplt" type="radio" checked="" style="margin-left: 25px;" id="faviconreplt" value="1">
 <img alt="" src="data:image/x-icon;base64,AAABAAEAEBAAAAEAGABoAwAAFgAAACgAAAAQAAAAIAAAAAEAGAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACskXaEXDOHXzaIYDeIYDeIYDeIYDeIYDeIYDeIYDeIYDeIYDeIYDeIYDeEXTKefV6AVyx5TiB5TiB5TiB5TiB5TiB5TiB5TiB5TiB5TiB5TiB5TiB5TiB5TiB4TiB8VCeIXzh5TiB5TiB5TiB5TiB5TiB6TyB5TyF5TiF5TiB5TiB5TiB5TiB5TiB5TiCCWzCIYTh6UCF7UCF7UCJ6UCKbfFmcfFmbfFmcfFmcfFmMZj16UCJ7UCJ7UCF6UCGDWy+KYjl+UyV+VCV/VCV+UyX////////////////////////HtKB/VCV+VCV+VCWGXTGMZTuCVymBVymCVymCVyn////////g1crBq5Tw6+X///////+hgV6CVyiCVymIXzSPZz6GXC2GWiyFWiyFWi3////////DrZaGWyykg2L////////DrZaFWy2GWi2MYzeRaUCKYDGJXjCKXjCJXjD////////49fLx6+b49fL///////+ZckqJXjCJXjCPZjqUbEOPZDaOYzWOYzWOYzX///////////////////////+5noGPYzWOYzWPYzWUaT+Xb0aVaTyTZzqTaDqTaDr////////Xx7a8oYX59vP////JtJ2TaDqUZzqUaDuXbkKZcUmYbD+Xaz2Xaz2Yaz7////////MtZ+edEny7ef////l2s+Yaz6Xaz2Xaz2ackabdEqccEKabkCabkCbbUD////////////////////////g0sSbbkGabkCbbkKddEmedk6hckaecUSeckSeckTn3NHn3NHn3NHn3NHn3NHbyrmke1GeckSeckSfckWheE6gdk6hdUifc0Wgc0agc0agc0agc0afc0agc0agc0afc0agc0agc0afc0afdEakfFCddEqjeEmjeUmjeEmkeEmkeUqjeEqkeUujeUqjeUqjeUqjeUqjeUqjeUqkekucc0S8o4ufd06jfFKjfVOjfVOjfVOjfVOjfVOjfVOjfVOjfVOjfVOjfVOjfVOgd020mHsAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" />
@@ -1228,7 +1283,10 @@ u(".ovk-diag-body .attachment_selector").on("click", ".album-photo", async (ev) 
 						  <input name="faviconreplt" type="radio" id="faviconreplt" value="4">
                           <img alt="" src="data:image/x-icon;base64,AAABAAEAEBAAAAEAIABoBAAAFgAAACgAAAAQAAAAIAAAAAEAIAAAAAAAQAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAJxzUCCgd1N5pn5a/6d+W/+fdlKkAAAAAJtyTw6fdlJzpX1Z56Z+Wv+cc1CqAAAAAAAAAAAAAAAAAAAAAJ10UTalfFjRrIRf/6+HYv+vh2L/qYFc/6F4VDiielaYqoFd/66GYf+shF//nnVS/wAAAAAAAAAAAAAAAJ10UUSnflrtroZh/7CIY/+wiGP/sIhj/66GYf+shF/wrYVg/6+HYv+thWD/pHtX/5VsSpEAAAAAAAAAAJxzUDGnflrzroZh/7CIY/+wiGP/sIhj/7CIY/+wiGP/sIhj/7CIY/+wiGP/qIBb/5lwTZuTaUcMAAAAAJpxTiGkfFjUrYVg/66GYf+shF//r4di/7CIY/+wiGP/r4di/6yEX/+vh2L/r4di/6Z9WuMAAAAAAAAAAAAAAACfdlKFq4Ne/66GYf+of1v/pXtY2KuDXv+wiGP/sIhj/6uDXv+lfVnYqYFd/66GYf+qgV3snXRQPgAAAACacU4vp35a7a+HYv+rg17/nnZTzZpyTyqnf1r/sIhj/7CIY/+nf1r/m3JPKqF3VOuthGD/roZh/6V9WOOacU4vnXRRlKyDX/+vh2L/p35a/5huTFsAAAAAp39a/7CIY/+vh2L/pHxX/wAAAACWbUt4p39a/6+HYv+sg1//nXRRlJ10UfmpgFz/qYBc/511Uv+WbUoGmXBNTKd9Wv+rg17/qoFd/552UvgAAAAAlGtICJ51Uv+pgFz/qYBc/510UfmUa0ismnFO+plvTduUakhyAAAAAJVrSd2bck76nXNQ+ppxTvGUa0icAAAAAAAAAACUakhmmW9N45pxTvqUa0iiAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA//8AAP//AAD//wAA+CAAAPAAAADgAAAAwAAAAIADAACAAQAAAAAAAAQgAAAAIAAACDAAAP//AAD//wAA//8AAA==" />
                         <br><br>
-						<input value="Сохранить" class="button" type="submit" id="save">
+                          <input type="text" id="localization" value="" placeholder="{...">
+                          <label class="nobold">${localization.vkifylocalization}</label>
+                        <br><br>
+						<input value="${tr('save')}" class="button" type="submit" id="save">
 						</div>
                         </div>
                     </div>
@@ -1255,6 +1313,7 @@ u(".ovk-diag-body .attachment_selector").on("click", ".album-photo", async (ev) 
         localStorage.setItem('gifsautoplay', document.getElementById('gifsautoplay').checked);
         localStorage.setItem('faviconrepl', document.getElementById('faviconrepl').checked);
         localStorage.setItem('faviconreplt', document.querySelector('input[name="faviconreplt"]:checked').value);
+        localStorage.setItem('localizationdata', document.getElementById('localization').value);
         NewNotification('VKify', 'Настройки сохранены!', popupimg, () => {}, 5000, false);
         setTimeout("location.reload();", 1000);
     }
@@ -1270,6 +1329,7 @@ u(".ovk-diag-body .attachment_selector").on("click", ".album-photo", async (ev) 
         document.getElementById('adm_ava_repl').checked = (/true/).test(localStorage.getItem('adm_ava_repl'));
         document.getElementById('gifsautoplay').checked = (/true/).test(localStorage.getItem('gifsautoplay'));
         document.getElementById('faviconrepl').checked = (/true/).test(localStorage.getItem('faviconrepl'));
+        document.getElementById('localization').value = localStorage.getItem('localizationdata');
         const headradios = document.querySelectorAll(`input[type="radio"][name="vk2012head"]`);
         headradios.forEach(radio => {
             if (radio.value === localStorage.getItem('vk2012_header_type')) {

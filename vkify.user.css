@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           VKify
 @namespace      https://github.com/openstyles/stylus
-@version        1.4
+@version        1.4.1
 @description    sosiski
 @author         koke228
 @homepageURL    https://github.com/koke228666/VKify
@@ -276,7 +276,7 @@ body.scrolled .toTop:hover,
   position: absolute;
   top: 50%;
   transform: translateY(-40%);
-  margin-left: 54px;
+  margin-left: 95%;
   background-position-x: -96px;
 }
 
@@ -486,12 +486,12 @@ img[src*="/assets/packages/static/openvk/img/oxygen-icons/16x16/mimetypes/applic
   padding-top: 0px !important;
   padding-bottom: 0px !important;
   border-radius: 0 !important;
-  border: 1px solid #878787;
-  background-color: #F0F1F3;
+  border: 1px solid #B5B9BC;
+  background-color: #FFFFFF;
   box-shadow: 0px 2px 6px -5px rgba(0, 0, 0, 0.8);
   color: #000;
 }
 .tippy-box[data-theme~="musicpopup"] .tippy-arrow {
- color: #f7f7f7;
+ color: #f7f7f7 !important;
 }
 }

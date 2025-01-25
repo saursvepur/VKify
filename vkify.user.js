@@ -938,7 +938,8 @@ u(".ovk-diag-body .attachment_selector").on("click", ".album-photo", async (ev) 
             <div class="deviceButton musicIcon" data-tip="simple" data-title=`+tr('mute_tip')+`></div>
         </div>
     </div>
-</div>`,
+</div>
+`,
             allowHTML: true,
             interactive: true,
             placement: 'bottom',
@@ -949,6 +950,7 @@ u(".ovk-diag-body .attachment_selector").on("click", ".album-photo", async (ev) 
             appendTo: document.body,
             onMount(instance) {
                 window.player.__updateFace();
+                window.player.audioPlayer.onvolumechange();
             }});
         };
     /* опенвк не существует, очень сырая функция, не советую */
@@ -1163,7 +1165,7 @@ u(".ovk-diag-body .attachment_selector").on("click", ".album-photo", async (ev) 
 						  <input name="vk2012head" type="radio" id="vk2012head2" value="custom" style="margin-left: 25px;">
                           <img alt="" src="data:image/png;base64,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" />
                           <input type="text" id="customheader" value="" style="height: unset !important;width: 60px !important;margin-left: -95px;transform: translateY(-16px);" placeholder="https://...">
-                          <label class="nobold" style="margin-left: 25px;">*поддерживаются любые ссылки вида "https://...", "data:image/..." и прочие</label>
+                          <label class="nobold" style="margin-left: 25px;">*поддерживаются любые ссылки на картинки (.png, .gif, .jpg, etc)</label>
                           <br><br>
 						  <input type="checkbox" checked="" id="flatplayerbtns">
 						  <label for="flatplayerbtns" class="nobold">Использовать более плоские кнопки в плеере</label>

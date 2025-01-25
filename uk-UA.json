@@ -27,5 +27,6 @@
 "vkifyproxyvkemojidesc": " - необхідно для відображення в країнах, з обмеженим доступом до VK (наприклад, Україна) та з метою анонімізації IP",
 "vkifyadmavarepl": "Заміна аватарки <a href='/id100'>Адміністрації</a>",
 "vkifygifautoplay": "Автовідтворення GIF",
-"vkifyfaviconrepl": "Заміняти favicon"
+"vkifyfaviconrepl": "Заміняти favicon",
+"vkifylocalization": "JSON локалізація VKify"
 }

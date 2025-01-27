@@ -28,5 +28,8 @@
 "vkifyadmavarepl": "Replace <a href='/id100'>Administration</a> avatar",
 "vkifygifautoplay": "GIF autoplay",
 "vkifyfaviconrepl": "Replace favicon",
-"vkifylocalization": "VKify JSON localization"
+"vkifylocalization": "VKify JSON localization",
+"vkifyprofilebg": "Show profile background",
+"vkifyverifiedpopup": "This user's page is verified by VKontakte",
+"vkifysaved": "Settings saved!"
 }

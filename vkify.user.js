@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         VKify
 // @namespace    http://tampermonkey.net/
-// @version      1.6
+// @version      1.6.1
 // @description  Дополнительные штуки-друюки для VKify
 // @author       koke228
 // @match        *://ovk.to/*
@@ -527,6 +527,53 @@ content: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAZAAAAGQCAIAAAAP3aGb
     const ovkuserid = window.openvk.current_id;
     const csrfToken = document.querySelector('meta[name="csrf"]').getAttribute('value');
     document.title = document.title.replace("OpenVK", localization.vknaming);
+    function fullattachmenu() {
+        const fullWallAttach = `<a class="header menu_toggler">
+                        Прикрепить
+                    </a>
+                    <a id="__photoAttachment">
+                        <img src="/assets/packages/static/openvk/img/oxygen-icons/16x16/mimetypes/application-x-egon.png">
+                        Фотография
+                    </a>
+                    <a id="__videoAttachment">
+                        <img src="/assets/packages/static/openvk/img/oxygen-icons/16x16/mimetypes/application-vnd.rn-realmedia.png">
+                        Видеозапись
+                    </a>
+                    <a id="__audioAttachment">
+                        <img src="/assets/packages/static/openvk/img/oxygen-icons/16x16/mimetypes/audio-ac3.png">
+                        Аудиозапись
+                    </a>
+                    <a id="__documentAttachment">
+                        <img src="/assets/packages/static/openvk/img/oxygen-icons/16x16/mimetypes/application-octet-stream.png">
+                        Документ
+                    </a>
+                    <a id="__notesAttachment">
+                        <img src="/assets/packages/static/openvk/img/oxygen-icons/16x16/mimetypes/application-x-srt.png">
+                        Заметка
+                    </a>
+                    <a onclick="initGraffiti(event);">
+                        <img src="/assets/packages/static/openvk/img/oxygen-icons/16x16/actions/draw-brush.png">
+                        Граффити
+                    </a>
+                    <a onclick="initPoll(event);">
+                        <img src="/assets/packages/static/openvk/img/oxygen-icons/16x16/actions/office-chart-bar-stacked.png">
+                        Опрос
+                    </a>
+                    <a id="__geoAttacher">
+                        <img src="/assets/packages/static/openvk/img/oxygen-icons/16x16/apps/amarok.png">
+                        Место
+                    </a>
+                    <a id="__sourceAttacher">
+                        <img src="/assets/packages/static/openvk/img/oxygen-icons/16x16/actions/insert-link.png">
+                        Источник
+                    </a>`;
+
+        const wallAttach = document.getElementById('wallAttachmentMenu');
+        if (wallAttach) {
+            wallAttach.innerHTML = fullWallAttach;
+        }
+    }
+    fullattachmenu();
     function addtips() {
         tippy(document.querySelectorAll('img.name-checkmark'), {
             content: `<text style="font-size: 11px;">${localization.vkifyverifiedpopup}</text>`,
@@ -1129,6 +1176,7 @@ u(".ovk-diag-body .attachment_selector").on("click", ".album-photo", async (ev) 
 
         let mo = new MutationObserver(function(mutations) {
         addtips();
+        fullattachmenu();
     if (enable_vk2012) {
         try {
             const muslnk = document.querySelector("#headerMusicLinkDiv a");

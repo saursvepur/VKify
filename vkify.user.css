@@ -1,7 +1,7 @@
 /* ==UserStyle==
 @name           VKify
 @namespace      https://github.com/openstyles/stylus
-@version        1.4.2
+@version        1.4.3
 @description    sosiski
 @author         koke228
 @homepageURL    https://github.com/koke228666/VKify
@@ -542,6 +542,10 @@ background-position: -108px -52px !important;
   height: 12px !important;
 }
 
+.docListViewItem .doc_volume #report_icon {
+  background-position-x: 463px;
+  background-position-y: -67px;
+}
 
 .tippy-box[data-theme="light vk"] {
   background: #FFF !important;

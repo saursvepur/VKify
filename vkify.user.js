@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         VKify
 // @namespace    http://tampermonkey.net/
-// @version      1.6.2
+// @version      1.6.3
 // @description  Дополнительные штуки-друюки для VKify
 // @author       koke228
 // @match        *://ovk.to/*
@@ -530,43 +530,43 @@ content: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAZAAAAGQCAIAAAAP3aGb
     document.title = document.title.replace("OpenVK", localization.vknaming);
     function fullattachmenu() {
         const fullWallAttach = `<a class="header menu_toggler">
-                        Прикрепить
+                        ${tr('attach')}
                     </a>
                     <a id="__photoAttachment">
                         <img src="/assets/packages/static/openvk/img/oxygen-icons/16x16/mimetypes/application-x-egon.png">
-                        Фотография
+                        ${tr('photo')}
                     </a>
                     <a id="__videoAttachment">
                         <img src="/assets/packages/static/openvk/img/oxygen-icons/16x16/mimetypes/application-vnd.rn-realmedia.png">
-                        Видеозапись
+                        ${tr('video')}
                     </a>
                     <a id="__audioAttachment">
                         <img src="/assets/packages/static/openvk/img/oxygen-icons/16x16/mimetypes/audio-ac3.png">
-                        Аудиозапись
+                        ${tr('audio')}
                     </a>
                     <a id="__documentAttachment">
                         <img src="/assets/packages/static/openvk/img/oxygen-icons/16x16/mimetypes/application-octet-stream.png">
-                        Документ
+                        ${tr('attach')}
                     </a>
                     <a id="__notesAttachment">
                         <img src="/assets/packages/static/openvk/img/oxygen-icons/16x16/mimetypes/application-x-srt.png">
-                        Заметка
+                        ${tr('document')}
                     </a>
                     <a onclick="initGraffiti(event);">
                         <img src="/assets/packages/static/openvk/img/oxygen-icons/16x16/actions/draw-brush.png">
-                        Граффити
+                        ${tr('graffiti')}
                     </a>
                     <a onclick="initPoll(event);">
                         <img src="/assets/packages/static/openvk/img/oxygen-icons/16x16/actions/office-chart-bar-stacked.png">
-                        Опрос
+                        ${tr('poll')}
                     </a>
                     <a id="__geoAttacher">
                         <img src="/assets/packages/static/openvk/img/oxygen-icons/16x16/apps/amarok.png">
-                        Место
+                        ${tr('geo_place')}
                     </a>
                     <a id="__sourceAttacher">
                         <img src="/assets/packages/static/openvk/img/oxygen-icons/16x16/actions/insert-link.png">
-                        Источник
+                        ${tr('source')}
                     </a>`;
 
         const wallAttach = document.getElementById('wallAttachmentMenu');

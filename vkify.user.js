@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         VKify
 // @namespace    http://tampermonkey.net/
-// @version      1.6.5
+// @version      1.6.6
 // @description  Дополнительные штуки-друюки для VKify
 // @author       koke228
 // @match        *://ovk.to/*
@@ -260,19 +260,15 @@ const ru_RU = `{
 }
 
 input[class="button"] {
-  padding-top: 5px;
-  padding-bottom: 4px;
-  text-shadow: 0 1px 0 #45688e;
-}
-
-input[class="button"] {
   padding: 5px 7px 4px;
-  padding-top: 7px;
-  padding-bottom: 7px;
-border-top: 1px solid #517295;
+  border-top: 1px solid #517295;
   border-bottom: 1px solid #4e6f93;
   border-left: 1px solid #4e6f93;
   border-right: 1px solid #4e6f93;
+  padding-top: 5px;
+  padding-bottom: 4px;
+  text-shadow: 0 1px 0 #45688e;
+  max-height: 25px !important;
 }
 
 
@@ -281,7 +277,7 @@ border-top: 1px solid #517295;
   border-bottom: 1px solid #4e6f93;
   border-left: 1px solid #4e6f93;
   border-right: 1px solid #4e6f93;
-  background: url(/themepack/vk2012/0.0.1.0/resource/11.png) repeat-x !important;
+  background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAAXCAYAAAAhrZ4MAAAAfUlEQVQYGRXD1w2BAQCF0Tuj/guCIJhAb9GiLOBF70RZwGhXvpMc1VY/U9Xl11Rl8TFVnr9NlWYvU8Xp01Rh8jCVH99N5UY3U9nh1VRmcDGV7p9NpXpnU8nuyVTQOZpKtA+m4q29qVhzZyra2JqK1LemwvWNqVBtbSroXc0/55J0ndZ094AAAAAASUVORK5CYII=") repeat-x !important;
   border-radius: 2px;
 }
 
@@ -358,7 +354,7 @@ border-top: 1px solid #517295;
 .page_yellowheader {
   padding: 6px 10px 8px !important;
   font-weight: bold !important;
-  background: url(/themepack/vk2012/0.0.1.0/resource/18.png) repeat-x !important;
+  background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAAUCAYAAABMDlehAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAVSURBVBhXY3j59uN/JgYgoBXBwAAAd6UD7STEpAsAAAAASUVORK5CYII=") repeat-x !important;
     background-color: rgba(0, 0, 0, 0) !important;
   background-color: #e9edf1 !important;
   border-right: solid 1px #e9edf1 !important;
@@ -395,7 +391,7 @@ input[type~="search"] {
     font-size: 11px !important;
     font-family: tahoma, verdana, arial, sans-serif !important;
     border-radius: 3px !important;
-    background: url(/themepack/vk2012/0.0.1.0/resource/4.gif) no-repeat 3px 4px !important;
+    background: url("data:image/gif;base64,R0lGODlhCwALAMQTAL/J1dLZ4tHY4bzG09LZ4cLM18/X4NDX4L3I1N3i6c7W397j6cHL19Pa4sTN2M3V377I1ert8brF0v///wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAEAABMALAAAAAALAAsAAAU74CROEVEwQjSSgORKkCoKEiEGkjJC0ioNu97oNzpIAqKG5DFK8F4IVeQhWRgAkIfUsVyNuA6ZNxL2jkIAOw==") no-repeat 3px 4px !important;
     background-color: #fff !important;
     padding-left: 23px !important;
     background-position-y: 5px !important;
@@ -403,7 +399,7 @@ input[type~="search"] {
 }
 input[type~="search"][name~="query"] {
     width: 169px /* qualified */ !important;
-    background: url(/themepack/vk2012/0.0.1.0/resource/4.gif) no-repeat 3px 4px /* qualified */ !important;
+    background: url("data:image/gif;base64,R0lGODlhCwALAMQTAL/J1dLZ4tHY4bzG09LZ4cLM18/X4NDX4L3I1N3i6c7W397j6cHL19Pa4sTN2M3V377I1ert8brF0v///wAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAEAABMALAAAAAALAAsAAAU74CROEVEwQjSSgORKkCoKEiEGkjJC0ioNu97oNzpIAqKG5DFK8F4IVeQhWRgAkIfUsVyNuA6ZNxL2jkIAOw==") no-repeat 3px 4px /* qualified */ !important;
     background-color: #fff /* qualified */ !important;
     padding-left: 22px /* qualified */ !important;
     background-position-y: 5px /* qualified */ !important;

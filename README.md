@@ -1,24 +1,47 @@
-# И в чём смысл?
-А в том, что тема пытается сделать OpenVK ещё более похожим на ВКонтакте 2010-х
+# VKify
+VKify — аддон для OpenVK, который старается приблизить дизайн данного сервиса к ВКонтакте 2010-х, однако, получается солянка из разных эпох данного сайта. <sup><b>100% Без ГМО!</b></sup>
+#### 
+
+## Функционал
+<sup><b>* - включено по умолчанию</b></sup>
+- Замена стандартных смайликов twemoji на смайлики из ВКонтакте*
+  <br>Смайлики загружаются с серверов ВКонтакте. Если по какой-то причине вас не устраивает прямой доступ, вы можете использовать проксирование для них через https://koke228.ru*
+- Имитация ВКонтакте ~2012 года с возможностью смены шапки (подборка из официальных, а также возможность загрузки внешней)*
+- Замена аватарки [Администрации](https://ovk.to/id100)*
+- Замена favicon (подборка официальных иконок за разные года, 2007~2015)*
+- И многое другое!
+  #### У вас есть интересное предложение? Мы рады увидеть его в [issues](https://github.com/koke228666/VKify/issues)!
+## Скриншоты
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/b1ff5ee3-8075-48d0-8cc7-d15c7512b3b9" alt="классная группа https://ovk.to/vkify подписывайтесь" />
-  <img src="https://github.com/user-attachments/assets/b98fa5a7-6e9d-4a31-89d3-8a84112a909e" alt="какао прокакалось vibe" />
-  <img src="https://github.com/user-attachments/assets/10514054-325a-450f-868d-365455bd02de" alt="смайлики" />
-  <img src="https://github.com/user-attachments/assets/eb6129f9-3eca-48d7-b76e-f56c1d7e741d" alt="404" />
-  <img src="https://github.com/user-attachments/assets/51f14a67-5ace-4ce1-b958-d3ad764b5f45" alt="кнопачки прикрепления" />
-  <img src="https://github.com/user-attachments/assets/1f1955fe-37f1-4579-b14f-d2ff65d78d9e" alt="пикер смайликов в лс" />
+  <img width="49%" alt="Скриншот настроек скрипта" src="https://github.com/user-attachments/assets/50aea5f4-7c3e-4391-8fee-444ae8e1235a">
+  <img width="49%" alt="Примерный вид страниц, новый AJAX плеер и прочее" src="https://github.com/user-attachments/assets/7c140910-58ea-48b6-8afc-4007ad2cbc33">
+</p>
+<p align="center">
+  <img alt="Частично доработанные диалоги" src="https://github.com/user-attachments/assets/69a19e05-b1c9-4da7-9336-3ceabfa82f15">
 </p>
 
-# Установка
-### До установки убедитесь, что у вас установлены [Tampermonkey](https://www.tampermonkey.net/) и [Stylus](https://add0n.com/stylus.html).
 
+## Установка
+### Если вы ставите аддон не в первый раз, то удалите все связанные с VKify скрипты и стили, а затем поставьте начисто. Это из-за того, что я дебил и не додумался сразу сделать нормальные манифесты.
 
-### Для Chrom(-e/-ium) важно жесть сделать [это](https://www.tampermonkey.net/faq.php#Q209). Не пишите мне о том, что в вашем Chromium-based браузере ничего не работает. Это ваш браузер плохой.
+1. Для начала необходимо установить данные расширения для браузера:
+- [Tampermonkey](https://www.tampermonkey.net/?locale=ru) 
+- [Stylus](https://add0n.com/stylus.html)
+  <br> Учтите: если ваш браузер Chromium-based, важно [сделать это](https://www.tampermonkey.net/faq.php#Q209), иначе я дам вам по шапке. Не пишите мне ни о каких проблемах, возникающих на подобных браузерах. Установите [величайший браузер всех времён](https://www.mozilla.org/firefox), или же [его более крутую версию](https://www.waterfox.net/), ну или [его самую красивую версию](https://arc.net/)
+2. Выберите тему "ВКонтакте 2007" в [настройках интерфейса OpenVK](https://ovk.to/settings?act=interface), в настройках VKify вы сможете включить дизайн ВКонтакте 2012
+3. Потыкайте следующие ссылки:
+  <br>[Скрипт](https://raw.githubusercontent.com/koke228666/VKify/refs/heads/main/vkify.user.js)
+  <br>[Стиль](https://raw.githubusercontent.com/koke228666/VKify/refs/heads/main/vkify.user.css)
+#### Готово!
+После установки, настройки скрипта будут доступны [тут](https://ovk.to/settings?vkify)
 
+## Локализация
+Если вас как-либо не устраивает стандартная локализация VKify, вы можете использовать готовую из корня репозитория, или же создать свою на их основе. Достаточно вставить содержимое файла локализации (к примеру, [Английский (США)](https://raw.githubusercontent.com/koke228666/VKify/refs/heads/main/en-US.json)) в специальное поле:
+<p align="center">
+  <img alt="Волшебное поле локализации" src="https://github.com/user-attachments/assets/0b6a88f9-7e79-4556-9495-1f378ab46c9d">
+</p>
+<p align="center">
+  ...и все элементы VKify примут эту локализацию:
+  <img alt="Локализованная страничка VKify" src="https://github.com/user-attachments/assets/eb80cc97-3b22-4c03-9bfa-590dd3aac8e0">
+</p>
 
-### Если вы ставите тему не в первый раз, то удалите все связанные с VKify скрипты и стили, а затем поставьте начисто. Это из-за того, что я дебил и не додумался сразу сделать нормальные манифесты.
-
-
-#### 1. Для начала ставим тему ВКонтакте 2007 [тут](https://ovk.to/settings?act=interface), в настройках VKify вы сможете выбрать тему ВК 2012.
-#### 2. Кликаем [сюда (юзерскрипт)](https://raw.githubusercontent.com/koke228666/VKify/refs/heads/main/vkify.user.js) и [сюда (стиль)](https://raw.githubusercontent.com/koke228666/VKify/refs/heads/main/vkify.user.css)
-#### 3. Всьо

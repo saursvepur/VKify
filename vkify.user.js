@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         VKify
 // @namespace    http://tampermonkey.net/
-// @version      1.6.1
+// @version      1.6.2
 // @description  Дополнительные штуки-друюки для VKify
 // @author       koke228
 // @match        *://ovk.to/*
@@ -56,7 +56,8 @@ const ru_RU = `{
     "vkifylocalization": "JSON локализация VKify",
     "vkifyprofilebg": "Отображать фоны страниц",
     "vkifyverifiedpopup": "Страница этого пользователя верифицирована ВКонтакте",
-    "vkifysaved": "Настройки сохранены!"
+    "vkifysaved": "Настройки сохранены!",
+    "vkifysettingsfooter": "настройки VKify"
 }`;
     function mergeLocalization(mainLoc, defaultLoc) {
         const result = { ...defaultLoc };
@@ -169,7 +170,7 @@ const ru_RU = `{
         var vkemojiserver = 'https://vk.com/emoji/e'
     }
     if (enable_setts == 'true') {
-       var vkifysett = '<a href="/settings?vkify" target="_blank" class="link">настройки VKify</a>';
+       var vkifysett = `<a href="/settings?vkify" target="_blank" class="link">${localization.vkifysettingsfooter}</a>`;
     } else {
        var vkifysett = '';
     }

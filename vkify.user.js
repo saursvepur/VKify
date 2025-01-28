@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         VKify
 // @namespace    http://tampermonkey.net/
-// @version      1.6.4
+// @version      1.6.5
 // @description  Дополнительные штуки-друюки для VKify
 // @author       koke228
 // @match        *://ovk.to/*
@@ -546,11 +546,11 @@ content: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAZAAAAGQCAIAAAAP3aGb
                     </a>
                     <a id="__documentAttachment">
                         <img src="/assets/packages/static/openvk/img/oxygen-icons/16x16/mimetypes/application-octet-stream.png">
-                        ${tr('attach')}
+                        ${tr('document')}
                     </a>
                     <a id="__notesAttachment">
                         <img src="/assets/packages/static/openvk/img/oxygen-icons/16x16/mimetypes/application-x-srt.png">
-                        ${tr('document')}
+                        ${tr('note')}
                     </a>
                     <a onclick="initGraffiti(event);">
                         <img src="/assets/packages/static/openvk/img/oxygen-icons/16x16/actions/draw-brush.png">

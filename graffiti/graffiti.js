@@ -661,6 +661,48 @@ function hide(elem) {
   elem.olddisplay = (d != 'none') ? d : '';
   elem.style.display = 'none';
 }
+function isEmpty(o) { if(Object.prototype.toString.call(o) !== '[object Object]') {return false;} for(var i in o){ if(o.hasOwnProperty(i)){return false;} } return true; }
+function removeData(elem, name) {
+  var id = elem ? elem[vkExpand] : false;
+  if (!id) return;
+
+  if (name) {
+    if (vkCache[id]) {
+      delete vkCache[id][name];
+      name = '';
+
+      var count = 0;
+      for (name in vkCache[id]) {
+        if (name !== '__elem') {
+          count++;
+          break;
+        }
+      }
+
+      if (!count) {
+        removeData(elem);
+      }
+    }
+  } else {
+    removeEvent(elem);
+    removeAttr(elem, vkExpand);
+    delete vkCache[id];
+  }
+}
+function removeAttr(el) {
+  for (var i = 0, l = arguments.length; i < l; ++i) {
+    var n = arguments[i];
+    if (el[n] === undefined) continue;
+    try {
+      delete el[n];
+    } catch(e) {
+      try {
+        el.removeAttribute(n);
+      } catch(e) {}
+    }
+  }
+}
+
 
 var Graffiti = {
   init: function() {
@@ -1700,5 +1742,3 @@ var Graffiti = {
     });
   }
 }
-
-try{stManager.done('graffiti.js');}catch(e){}

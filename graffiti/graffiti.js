@@ -702,7 +702,12 @@ function removeAttr(el) {
     }
   }
 }
-
+function ce(tagName, attr, style) {
+  var el = document.createElement(tagName);
+  if (attr) extend(el, attr);
+  if (style) setStyle(el, style);
+  return el;
+}
 
 var Graffiti = {
   init: function() {

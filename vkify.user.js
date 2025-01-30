@@ -1,11 +1,12 @@
 // ==UserScript==
 // @name         VKify
 // @namespace    http://tampermonkey.net/
-// @version      1.7
+// @version      1.7.1
 // @description  Дополнительные штуки-друюки для VKify
 // @author       koke228
 // @match        *://ovk.to/*
 // @match        *://openvk.xyz/*
+// @match        *://vepurovk.xyz/*
 // @run-at       document-start
 // @grant        none
 // @updateURL    https://raw.githubusercontent.com/koke228666/VKify/refs/heads/main/vkify.user.js
@@ -1081,7 +1082,8 @@ u(".ovk-diag-body .attachment_selector").on("click", ".album-photo", async (ev) 
         try {
             const gift_data = await window.OVKAPI.call("gifts.get", {"user_id": window.openvk.current_id, "count": 1});
             if (!gift_data == "") {
-            const gift_sender = await window.OVKAPI.call("users.get", {"user_ids": gift_data[0]["from_id"]});
+                if (!gift_data[0] == "") {
+                    const gift_sender = await window.OVKAPI.call("users.get", {"user_ids": gift_data[0]["from_id"]});
                 window.lastgift = `<div id="news">
                                 <b>Подарок</b>
                                 <hr size="1">
@@ -1094,6 +1096,7 @@ u(".ovk-diag-body .attachment_selector").on("click", ".album-photo", async (ev) 
                     newsDiv.insertAdjacentHTML('afterend', window.lastgift);
                     }
             }
+        }
         } catch (error) {
             console.error('подарочки не грузяца:', error);
             return null;

@@ -32,5 +32,12 @@
 "vkifyprofilebg": "Отображать фоны страниц",
 "vkifyverifiedpopup": "Страница этого пользователя верифицирована ВКонтакте",
 "vkifysaved": "Настройки сохранены!",
-"vkifysettingsfooter": "настройки VKify"
+"vkifysettingsfooter": "настройки VKify",
+"vkifygraffiti": "Использовать граффити из ВКонтакте за 2013 год",
+"graffitiflushhistory": "Очистить",
+"graffitibackhistory": "Отменить",
+"graffiticolor": "Цвет:",
+"graffitiopacity": "Интенсивность:",
+"graffitithickness": "Толщина:",
+"vkifyteamavarepl": "Заменять аватарку <a href='/team'>команды OpenVK</a>"
 }

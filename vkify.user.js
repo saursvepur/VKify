@@ -41,12 +41,12 @@ const ru_RU = `{
     "vkifyfootersett": "Кнопка VKify в футере",
     "vkifyfootersettdesc": " - вы сможете всегда открыть эту страницу через <a href=\\"/settings?vkify\\">эту ссылку</a>",
     "vkifyrealvkify": "Абсолютная ВКфикация",
-    "vkifyrealvkifydesc": " - пытаемся заменить абсолютно все упоминания OpenVK со страницы на \\"ВКонтакте\\" (<b style=\\"color: red;\\">ОСТОРОЖНО! Может заменить то, чего не стоило бы</b>, однако, выглядит прикольно)",
+    "vkifyrealvkifydesc": " - пытаемся заменить абсолютно все упоминания VepurOVK со страницы на \\"ВКонтакте\\" (<b style=\\"color: red;\\">ОСТОРОЖНО! Может заменить то, чего не стоило бы</b>, однако, выглядит прикольно)",
     "vkifyvk2012": "Имитация ВК 2012 вместо 2007",
     "vkifysupportedlinks": "*поддерживаются любые ссылки на картинки (.png, .gif, .jpg, etc)",
     "vkifyflatplayerbtns": "Использовать более плоские кнопки в плеере",
     "vkifyfartscroll": "Fartscroll",
-    "vkifyfartscrolldesc": " - удалённая фича OpenVK",
+    "vkifyfartscrolldesc": " - пердёж",
     "vkifyenablevkemoji": "Использовать смайлики из ВКонтакте",
     "vkifyenablevkemojidesc": " - прекрасно и неповторимо",
     "vkifyproxyvkemoji": "Проксировать смайлики",
@@ -65,7 +65,7 @@ const ru_RU = `{
     "graffiticolor": "Цвет:",
     "graffitiopacity": "Интенсивность:",
     "graffitithickness": "Толщина:",
-    "vkifyteamavarepl": "Заменять аватарку <a href=\\"/team\\">команды OpenVK</a>"
+    "vkifyteamavarepl": "Заменять аватарку <a href=\\"/team\\">команды VepurOVK</a>"
 }`;
     function mergeLocalization(mainLoc, defaultLoc) {
         const result = { ...defaultLoc };
@@ -619,7 +619,7 @@ content: url("data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD//gA7Q1JFQVRPUjo
     window.addEventListener('DOMContentLoaded', () => {
     const ovkuserid = window.openvk.current_id;
     const csrfToken = document.querySelector('meta[name="csrf"]').getAttribute('value');
-    document.title = document.title.replace("OpenVK", localization.vknaming);
+    document.title = document.title.replace("VepurOVK", localization.vknaming);
 if (vkgraffiti == 'true') {
     window.initGraffiti = function(event) {
         var msgbox = new CMessageBox({
@@ -1280,10 +1280,8 @@ u(".ovk-diag-body .attachment_selector").on("click", ".album-photo", async (ev) 
     if (realvkify == 'true') {
     function replovk(node) {
         if (node.nodeType === Node.TEXT_NODE) {
-            node.nodeValue = node.nodeValue.replace(/OpenVK/gi, 'ВКонтакте');
-            node.nodeValue = node.nodeValue.replace(/опенвк/gi, 'ВКонтакте');
-            node.nodeValue = node.nodeValue.replace(/опен вк/gi, 'ВКонтакте');
-            node.nodeValue = node.nodeValue.replace(/open vk/gi, 'ВКонтакте');
+            node.nodeValue = node.nodeValue.replace(/VepurOVK/gi, 'ВКонтакте');
+            node.nodeValue = node.nodeValue.replace(/вепуровк/gi, 'ВКонтакте');
         } else {
             node.childNodes.forEach(replovk);
         }
@@ -1375,7 +1373,7 @@ u(".ovk-diag-body .attachment_selector").on("click", ".album-photo", async (ev) 
         }
     }
         const footer = document.querySelectorAll('.page_footer');
-            if (footer[0].textContent.includes('OpenVK Altair Preview')) {
+            if (footer[0].textContent.includes('VepurOVK © 2022-2025')) {
                     footer[0].innerHTML = vkfooter;
                     document.querySelector('#news').insertAdjacentHTML('afterend', window.lastgift);
                 /* замена счётчиков новых уведомлений */
@@ -1399,10 +1397,8 @@ u(".ovk-diag-body .attachment_selector").on("click", ".album-photo", async (ev) 
     if (realvkify == 'true') {
     function replovk(node) {
         if (node.nodeType === Node.TEXT_NODE) {
-            node.nodeValue = node.nodeValue.replace(/OpenVK/gi, 'ВКонтакте');
-            node.nodeValue = node.nodeValue.replace(/опенвк/gi, 'ВКонтакте');
-            node.nodeValue = node.nodeValue.replace(/опен вк/gi, 'ВКонтакте');
-            node.nodeValue = node.nodeValue.replace(/open vk/gi, 'ВКонтакте');
+            node.nodeValue = node.nodeValue.replace(/VepurOVK/gi, 'ВКонтакте');
+            node.nodeValue = node.nodeValue.replace(/вепуровк/gi, 'ВКонтакте');
         } else {
             node.childNodes.forEach(replovk);
         }
@@ -1411,7 +1407,7 @@ u(".ovk-diag-body .attachment_selector").on("click", ".album-photo", async (ev) 
     }
         vkifyEmoji();
         playgifs();
-        document.title = document.title.replace("OpenVK", localization.vknaming);
+        document.title = document.title.replace("VepurOVK", localization.vknaming);
         });
 
         if (footer) {

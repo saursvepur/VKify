@@ -1,16 +1,16 @@
 // ==UserScript==
 // @name         VKify
-// @namespace    http://tampermonkey.net/
+// @namespace    http://saurvsvepur.xyz/
 // @version      1.7.2
 // @description  Дополнительные штуки-друюки для VKify
-// @author       koke228
+// @author       koke228, saursvepur
 // @match        *://ovk.to/*
 // @match        *://openvk.xyz/*
 // @match        *://vepurovk.xyz/*
 // @run-at       document-start
 // @grant        none
-// @updateURL    https://raw.githubusercontent.com/koke228666/VKify/refs/heads/main/vkify.user.js
-// @downloadURL  https://raw.githubusercontent.com/koke228666/VKify/refs/heads/main/vkify.user.js
+// @updateURL    https://raw.githubusercontent.com/saursvepur/VKify/refs/heads/main/vkify.user.js
+// @downloadURL  https://raw.githubusercontent.com/saursvepur/VKify/refs/heads/main/vkify.user.js
 // ==/UserScript==
 
 (function() {

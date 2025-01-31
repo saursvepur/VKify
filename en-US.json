@@ -32,5 +32,12 @@
 "vkifyprofilebg": "Show profile background",
 "vkifyverifiedpopup": "This user's page is verified by VKontakte",
 "vkifysaved": "Settings saved!",
-"vkifysettingsfooter": "VKify settings"
+"vkifysettingsfooter": "VKify settings",
+"vkifygraffiti": "Use VKontakte 2013 graffiti",
+"graffitiflushhistory": "Clear",
+"graffitibackhistory": "Back",
+"graffiticolor": "Color:",
+"graffitiopacity": "Opacity:",
+"graffitithickness": "Thickness:",
+"vkifyteamavarepl": "Replace <a href='/team'>OpenVK team</a> avatar"
 }
